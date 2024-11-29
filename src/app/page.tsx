@@ -2,6 +2,7 @@ import Banner from "@/features/Banner";
 import CarouselContainer from "@/features/CarouselContainer";
 import ContactForm from "@/features/ContactForm";
 import HomePopularPackages from "@/features/HomePopularPackages";
+import HomeStaticService from "@/features/HomeStaticService";
 import OurServices from "@/features/OurServices";
 import QuoteForm from "@/features/QuoteForm";
 import WhyChooseUs from "@/features/WhyChooseUs";
@@ -28,7 +29,10 @@ export default async function Home() {
       <QuoteForm />
       <WhyChooseUs />
       <OurServices />
-      <HomePopularPackages packages={packages.packages} />
+      {packages && (
+        <HomePopularPackages packages={packages.packages} />
+      )}
+      <HomeStaticService />
       <Banner />
       <ContactForm />
     </WebsiteTemplate>
