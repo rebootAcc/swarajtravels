@@ -48,7 +48,7 @@ export default async function ServiceDetails({
         heading="Services"
         subHeading={currentPackage._doc.packageCity}
       />
-      <section className="p-4 sm:p-10 xl:p-20 flex flex-col lg:flex-row gap-4 lg:gap-8">
+      <section className="p-4 sm:p-10 xlg:p-20 flex flex-col lg:flex-row gap-4 lg:gap-8">
         <div className="flex flex-col gap-4 sm:gap-8 xl:gap-16">
           <Carousel>
             {currentPackage._doc.packageCover.map(

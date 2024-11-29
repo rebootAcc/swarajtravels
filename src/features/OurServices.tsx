@@ -34,21 +34,21 @@ export default function OurServices() {
     },
   ];
   return (
-    <section className="p-4 sm:p-10 xl:p-20 flex flex-col gap-4 lg:gap-8">
+    <section className="p-4 sm:p-10 xlg:p-20 flex flex-col gap-4 lg:gap-8">
       <h2 className="text-xl sm:text-3xl font-bold text-typeograph-1">
         Our Services
       </h2>
-      <div className="flex flex-wrap justify-center lg:justify-normal gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 justify-center lg:justify-normal gap-4">
         {services.map((service, id) => (
           <Card key={id}>
-            <div className="flex flex-col p-3 lg:p-5 !pb-0">
+            <div className="flex flex-col flex-1 p-3 lg:p-5 !pb-0">
               <div className="">
                 <Image
                   src={service.icon}
                   alt="service"
                   width={376}
                   height={408}
-                  className="lg:h-[400px] lg:w-[376px] object-cover rounded-lg"
+                  className="lg:h-[280px] xl:h-[400px] w-full object-cover rounded-lg"
                 />
               </div>
               <h2 className="text-typeograph-1 text-base text-center lg:text-xl font-semibold my-3 md:my-8">

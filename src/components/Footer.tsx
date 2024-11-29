@@ -102,11 +102,11 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[url('/assets/sticker-bg.jpg')] bg-no-repeat bg-cover bg-center">
-      <div className="flex flex-col bg-black/65 gap-6 lg:gap-11 text-white backdrop-blur-sm p-4 sm:p-10 xl:p-20">
+    <footer className="bg-[url('/assets/footer-bg.png')] bg-no-repeat bg-cover bg-center">
+      <div className="flex flex-col bg-black/65 gap-6 lg:gap-11 text-white backdrop-blur-sm p-4 sm:p-10 xlg:p-20">
         <div className="flex flex-col lg:flex-row gap-6 justify-between">
           <div className="flex flex-col lg:items-start gap-4 lg:max-w-xs">
-            <Link href="">
+            <Link href="/">
               <Image
                 src="/logo.png"
                 alt="logo"
@@ -126,7 +126,7 @@ export default function Footer() {
                 <span className="flex-1 h-0.5 bg-white max-w-[40%]" />
               </h2>
               <div className="flex flex-col gap-3">
-                <div className="inline-flex items-center gap-3 text-white text-base">
+                <div className="inline-flex items-start gap-3 text-white text-base">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="1em"
@@ -139,7 +139,14 @@ export default function Footer() {
                       d="M6.5.772C2.906.772 0 3.746 0 7.422c0 1.653.464 3.202 1.31 4.599.881 1.462 2.042 2.716 2.934 4.18.436.712.752 1.377 1.086 2.146.241.523.436 1.425 1.17 1.425s.929-.902 1.16-1.424c.344-.77.65-1.435 1.087-2.147.892-1.454 2.052-2.708 2.934-4.18.855-1.398 1.319-2.946 1.319-4.6 0-3.676-2.906-6.65-6.5-6.65Zm0 9.263c-1.281 0-2.321-1.064-2.321-2.375S5.219 5.285 6.5 5.285c1.281 0 2.321 1.064 2.321 2.375s-1.04 2.375-2.321 2.375Z"
                     />
                   </svg>
-                  <h3 className="">Dabgram, Siliguri, West Bengal - 731234</h3>
+                  <Link
+                    href="https://maps.app.goo.gl/6RyL4uf6naKPTYyz6"
+                    target="_blank"
+                    referrerPolicy="no-referrer"
+                    className="text-base lg:text-lg font-semibold"
+                  >
+                    Dabgram, Siliguri, West Bengal - 731234
+                  </Link>
                 </div>
                 <div className="inline-flex items-center gap-3 text-white text-base">
                   <svg
@@ -154,7 +161,12 @@ export default function Footer() {
                       d="M13.5.772h-12C.675.772.007 1.504.007 2.397L0 12.147c0 .894.675 1.626 1.5 1.626h12c.825 0 1.5-.732 1.5-1.625v-9.75c0-.894-.675-1.626-1.5-1.626Zm0 3.25-6 4.063-6-4.063V2.397l6 4.063 6-4.063v1.625Z"
                     />
                   </svg>
-                  <h3 className="">info@swarajtarvel.com</h3>
+                  <Link
+                    href="mailTo:info@swarajtarvel.com"
+                    className="text-base lg:text-lg font-semibold"
+                  >
+                    info@swarajtarvel.com
+                  </Link>
                 </div>
                 <div className="inline-flex items-center gap-3 text-white text-base">
                   <svg
@@ -169,7 +181,10 @@ export default function Footer() {
                     <path d="M6.582 10.402a.919.919 0 0 0 .927-.91.919.919 0 0 0-.927-.91.919.919 0 0 0-.927.91c0 .503.415.91.927.91Zm5.563 0a.919.919 0 0 0 .928-.91.919.919 0 0 0-.928-.91.919.919 0 0 0-.927.91c0 .503.415.91.927.91Z" />
                     <path d="M14.927 7.7c-.445-2.594-2.745-4.578-5.517-4.578-2.81 0-5.833 2.284-5.591 5.87 2.29-.92 4.015-2.922 4.506-5.36a7.465 7.465 0 0 0 6.602 4.067Z" />
                   </svg>
-                  <h3 className="">+91 9339312034 / 9330123451</h3>
+                  <h3 className="text-base lg:text-lg font-semibold">
+                    <Link href="tel:9339312034">+91 9339312034</Link> /{" "}
+                    <Link href="tel:9330123451">9330123451</Link>
+                  </h3>
                 </div>
               </div>
             </div>
@@ -184,7 +199,7 @@ export default function Footer() {
                   className="hover:text-primary text-base lg:text-lg font-semibold whitespace-nowrap"
                   key={id}
                 >
-                  <Link href="">&gt;&nbsp;&nbsp;{service.label}</Link>
+                  <Link href={service.href}>&gt;&nbsp;&nbsp;{service.label}</Link>
                 </li>
               ))}
             </ul>
@@ -199,7 +214,7 @@ export default function Footer() {
                   className="hover:text-primary text-base lg:text-lg font-semibold whitespace-nowrap"
                   key={id}
                 >
-                  <Link href="">&gt;&nbsp;&nbsp;{link.label}</Link>
+                  <Link href={link.href}>&gt;&nbsp;&nbsp;{link.label}</Link>
                 </li>
               ))}
             </ul>

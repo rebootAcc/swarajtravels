@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ContactDetails() {
   return (
-    <section className="flex flex-col md:flex-row gap-6 p-4 sm:p-10 xl:p-20">
+    <section className="flex flex-col md:flex-row gap-6 p-4 sm:p-10 xlg:p-20">
       <div className="flex flex-col rounded-md overflow-hidden border border-primary md:w-1/2">
         <h1 className="text-xl sm:text-3xl font-semibold text-center text-white bg-primary py-5 xl:py-10">
           Contact Details

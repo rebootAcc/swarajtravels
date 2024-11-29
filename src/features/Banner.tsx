@@ -5,7 +5,7 @@ export default function Banner() {
     <section className="bg-[url('/assets/banner-cover.png')] bg-no-repeat bg-cover">
       <div className="px-4 sm:px-8 lg:px-16 bg-black/60 text-white flex flex-col md:flex-row items-end justify-between">
         <div className="flex flex-col gap-3 md:gap-5 md:w-[50%] py-4 sm:py-6 lg:py-10">
-          <h1 className="font-bold text-2xl sm:text-4xl xl:text-7xl">
+          <h1 className="font-bold text-2xl sm:text-4xl lg:text-5xl xlg:text-7xl">
             A Truly Wonderful Experience - Testimonials
           </h1>
           <p className="text-sm md:text-xl">

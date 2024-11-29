@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function WhyChooseUs() {
   return (
-    <section className="p-4 sm:p-10 xl:p-20">
+    <section className="p-4 sm:p-10 xlg:p-20">
       <div className="flex flex-col lg:flex-row items-center gap-8 justify-between">
         <div className="relative">
           <Image
