@@ -6,37 +6,37 @@ export default function Footer() {
   const services = [
     {
       label: "Darjeeling Tour & Travel",
-      href: "",
+      href: "/services/darjeeling",
     },
     {
       label: "Sikkim Tour & Travel",
-      href: "",
+      href: "/services/sikkim",
     },
     {
       label: "Dooars Tour & Travel",
-      href: "",
+      href: "/services/dooars",
     },
     {
       label: "Meghalay Tour & Travel",
-      href: "",
+      href: "/services/meghalay",
     },
     {
-      label: "Assam Tour & Travel",
-      href: "",
+      label: "Kalimpong Tour & Travel",
+      href: "/services/kailmpong",
     },
     {
-      label: "Mizoram Tour & Travel",
-      href: "",
+      label: "Rajastan Tour & Travel",
+      href: "/services/rajastan",
     },
   ];
   const quickLinks = [
     {
       label: "Home",
-      href: "",
+      href: "/",
     },
     {
       label: "About Us",
-      href: "",
+      href: "/about",
     },
     {
       label: "Tour Operator",
@@ -244,12 +244,21 @@ export default function Footer() {
         <div className="w-full h-0.5 bg-white/40" />
         <div className="flex flex-col lg:flex-row gap-4 justify-between">
           <h1 className="text-base text-center">
-            Copyright 2024 <span className="font-bold">Swaraj Travellers</span>{" "}
+            Copyright 2024{" "}
+            <Link href="/" className="font-bold">
+              Swaraj Travellers
+            </Link>{" "}
             | All Rights Reserved. Privacy Policy
           </h1>
           <h1 className="text-base text-center">
             Design &amp; Developed By:{" "}
-            <span className="font-bold">Reboot Pvt. Ltd.</span>
+            <Link
+              href="https://rebootwebsite.vercel.app/"
+              target="_blank"
+              className="font-bold"
+            >
+              Reboot Pvt. Ltd.
+            </Link>
           </h1>
         </div>
       </div>

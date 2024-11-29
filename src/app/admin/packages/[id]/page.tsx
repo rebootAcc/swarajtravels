@@ -26,9 +26,12 @@ export default async function UpdatePackge({
       </div>
       <div className="xlg:px-8 px-4 py-4 flex flex-col gap-5 xl:gap-7">
         <h1 className="text-typeograph-1 text-lg xl:text-2xl font-medium">
-          Add Tour Package
+          Edit Tour Package
         </h1>
-        <AddNewPackageForm editedPackage={editedPackage._doc} />
+        <AddNewPackageForm
+          editedPackage={editedPackage._doc}
+          uploadFileDisable={true}
+        />
       </div>
     </AdminDashboardTemplate>
   );
