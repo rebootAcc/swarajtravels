@@ -114,15 +114,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const limit = parseInt(url.searchParams.get("limit") || "10", 10);
 
     // Initialize filters object
-    const filters: {
-      packagePrice: string;
-      packageActiveStatus: string | boolean;
-      packageCity: { $regex: string; $options: string };
-    } = {
-      packageCity: { $regex: "", $options: "i" },
-      packageActiveStatus: "",
-      packagePrice: "",
-    };
+    const filters: any = {};
 
     // Add filters based on the query parameters
     if (packagePrice) {
