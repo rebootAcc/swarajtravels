@@ -7,7 +7,7 @@ import Link from "next/link";
 async function getPackage(city: string) {
   try {
     const response = await fetch(
-      `${process.env.API_URI}/api/packages?packageCity=${city}`
+      `${process.env.API_URI}/api/packages?packageCity=${city}&packageActiveStatus=true`
     );
     const result = await response.json();
     return result;

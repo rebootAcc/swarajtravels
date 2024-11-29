@@ -80,7 +80,7 @@ export default function AddNewPackageForm({
         formdata.append("packageCover", uploadedPicture1);
       }
       if (uploadedPicture2 !== null) {
-        formdata.append("packageCover2", uploadedPicture2);
+        formdata.append("packageCover", uploadedPicture2);
       }
       const response = await fetch("/api/packages", {
         method: "POST",
