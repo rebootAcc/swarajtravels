@@ -10,6 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import ContactComponent from "./ContactComponent";
+import useClickOutSide from "@/hooks/useClickOutSide";
 export default function Navbar() {
   const navVariant = {
     start: {
@@ -54,6 +55,8 @@ export default function Navbar() {
       console.log(error);
     }
   };
+
+  const contactBoxRef = useClickOutSide(() => setContactForm(false));
 
   useEffect(() => {
     getAllCities();
@@ -310,7 +313,7 @@ export default function Navbar() {
       </motion.div>
       {contactForm && (
         <div className="fixed w-full h-full top-0 left-0 flex items-center justify-center bg-black/40 z-[1100]">
-          <div className="relative flex max-w-lg">
+          <div className="relative flex max-w-lg" ref={contactBoxRef}>
             <button
               type="button"
               onClick={() => setContactForm(false)}

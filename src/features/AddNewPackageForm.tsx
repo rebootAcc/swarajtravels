@@ -4,8 +4,10 @@ import { FormEvent, useEffect, useState } from "react";
 
 export default function AddNewPackageForm({
   editedPackage,
+  uploadFileDisable = false,
 }: {
   editedPackage?: any;
+  uploadFileDisable?: boolean;
 }) {
   const [city, setCity] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -264,6 +266,7 @@ export default function AddNewPackageForm({
             accept="image/*"
             className="hidden"
             id="file1"
+            disabled={uploadFileDisable}
             onChange={(e) => {
               const file = e.target.files ? e.target.files[0] : null;
               setUploadedPicture1(file);
@@ -290,6 +293,7 @@ export default function AddNewPackageForm({
             type="file"
             accept="image/*"
             className="hidden"
+            disabled={uploadFileDisable}
             id="file2"
             onChange={(e) => {
               const file = e.target.files ? e.target.files[0] : null;
