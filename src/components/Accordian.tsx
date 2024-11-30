@@ -3,19 +3,20 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Accordian({
-  open,
+  isOpen,
   data,
+  toggle,
 }: {
-  open?: boolean;
+  isOpen?: boolean;
+  toggle: () => void;
   data: any;
 }) {
-  const [isOpen, setIsOpen] = useState<boolean>(open || false);
   return (
     <div>
       <h2 className="text-lg lg:text-2xl">
         <button
           type="button"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggle}
           className={`flex items-center justify-between w-full p-5 font-medium rtl:text-right ${
             isOpen ? "text-white" : "text-typeograph-1"
           } border border-gray-200 ${

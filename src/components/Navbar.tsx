@@ -95,18 +95,12 @@ export default function Navbar() {
       },
     },
     {
-      href: null,
+      href: "/rental/car",
       label: "Car Rental",
-      handelClick: () => {
-        setContactForm(true);
-      },
     },
     {
-      href: null,
+      href: "/rental/bike",
       label: "Bike Rental",
-      handelClick: () => {
-        setContactForm(true);
-      },
     },
   ];
 
@@ -163,10 +157,6 @@ export default function Navbar() {
       label: "Contact Us",
     },
   ];
-
-  useEffect(() => {
-    toggleOpen();
-  }, [pathname]);
 
   return (
     <motion.nav

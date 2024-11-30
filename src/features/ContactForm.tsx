@@ -15,7 +15,7 @@ export default function ContactForm() {
             alt="contact"
             width={660}
             height={725}
-            className="max-w-[45vmax] xlg:max-w-[65vmax] md:block hidden overflow-hidden object-cover"
+            className="max-w-[45vw] xlg:max-w-[65vw] md:block hidden overflow-hidden object-cover"
           />
         </div>
         <ContactComponent

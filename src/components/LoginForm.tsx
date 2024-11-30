@@ -27,7 +27,7 @@ export default function LoginForm() {
         }),
       });
       const result = await response.json();
-      router.push("/admin/dashboard");
+      router.push("/dashboard/packages");
     } catch (error) {
       console.log(error);
     } finally {

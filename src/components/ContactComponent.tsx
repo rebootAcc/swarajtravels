@@ -4,14 +4,16 @@ import { FormEvent, useState } from "react";
 export default function ContactComponent({
   normalHeading,
   highlightedHeading,
+  currentLocation = "",
 }: {
   normalHeading: string;
   highlightedHeading: string;
+  currentLocation?: string; // Replace with the current location of the user
 }) {
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [location, setLocation] = useState<string>(currentLocation);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ export default function ContactComponent({
   return (
     <div className="bg-[url('/assets/sticker-bg.jpg')] bg-cover bg-no-repeat flex-1 overflow-hidden">
       <div className="flex flex-col px-6 md:px-16 py-4 md:py-10 w-full bg-white/75 flex-1 gap-5 md:gap-12">
-        <h1 className="inline-flex flex-col gap-3 md:gap-6 text-xl sm:text-3xl font-bold text-center">
+        <h1 className="inline-flex flex-col gap-3 md:gap-6 text-xl sm:text-3xl font-bold text-center capitalize">
           <span className="text-typeograph-1">{normalHeading}</span>
           <span className="text-primary">{highlightedHeading}</span>
         </h1>
@@ -65,7 +67,7 @@ export default function ContactComponent({
             onChange={(e) => setLocation(e.target.value)}
           >
             <option value="" className="text-typeograph-2">
-              Location
+              Tour Package
             </option>
             <option value="darjeeling" className="text-typeograph-2">
               Darjeeling

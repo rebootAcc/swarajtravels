@@ -3,28 +3,28 @@ import TableComponent from "@/components/TableComponent";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function DashBoardTable({ tableData }: { tableData: any }) {
+export default function RentalsTable({ tableData }: { tableData: any }) {
   const {
-    packages,
-    pagination: { currentPage, totalPages, totalPackages, pageSize },
+    rentals,
+    pagination: { currentPage, totalPages, totalRentals, pageSize },
   } = tableData;
 
-  const [allPack, setAllPAck] = useState(packages);
+  const [allPack, setAllPAck] = useState(rentals);
 
   const updateActiveStatus = async (packId: string, updatedValue: boolean) => {
     try {
-      const response = await fetch(`/api/packages/${packId}`, {
+      const response = await fetch(`/api/rentals/${packId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          updatedData: { packageActiveStatus: updatedValue },
+          updatedData: { rentalActiveStatus: updatedValue },
         }),
       });
       const result = await response.json();
       setAllPAck((prevPackages: any) => {
         return prevPackages.map((pack: any) =>
           pack._id === result._id
-            ? { ...pack, packageActiveStatus: result.packageActiveStatus }
+            ? { ...pack, rentalActiveStatus: result.rentalActiveStatus }
             : pack
         );
       });
@@ -34,7 +34,7 @@ export default function DashBoardTable({ tableData }: { tableData: any }) {
   };
   const deletePackage = async (packId: string) => {
     try {
-      const response = await fetch(`/api/packages/${packId}`, {
+      const response = await fetch(`/api/rentals/${packId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
@@ -43,23 +43,23 @@ export default function DashBoardTable({ tableData }: { tableData: any }) {
         return prevPackages.map((pack: any) => pack._id !== result._id);
       });
     } catch (error) {
-      console.error("Error updating package status", error);
+      console.error("Error Deleting rental status", error);
     }
   };
 
   const customizeTableData = {
     tableHead: [
-      "Tour Package Name",
-      "City/State",
-      "Duration",
-      "Rate",
+      "Car/Bike Name",
+      "Season Price",
+      "Off. Season",
+      "Rental Type",
       "Action",
     ],
     tableBody: allPack.map((item: any) => ({
-      "Tour Package Name": item.packageName,
-      "City/State": item.packageCity,
-      Duration: item.packageDuration,
-      Rate: `₹ ${item.packagePrice}`,
+      "Car/Bike Name": item.rentalName,
+      "Season Price": `₹ ${item.rentalSeasonPrice}`,
+      "Off. Season": `₹ ${item.rentalOffSeasonPrice}`,
+      "Rental Type": item.rentalType,
       Action: (
         <div className="flex space-x-2">
           <div className="inline-flex items-center cursor-pointer">
@@ -67,9 +67,9 @@ export default function DashBoardTable({ tableData }: { tableData: any }) {
               <input
                 type="checkbox"
                 value=""
-                checked={item.packageActiveStatus}
+                checked={item.rentalActiveStatus}
                 onChange={() =>
-                  updateActiveStatus(item._id, !item.packageActiveStatus)
+                  updateActiveStatus(item._id, !item.rentalActiveStatus)
                 }
                 id="active"
                 className="sr-only peer"
@@ -79,7 +79,7 @@ export default function DashBoardTable({ tableData }: { tableData: any }) {
             </label>
           </div>
           <Link
-            href={`/admin/packages/${item.packageId}`}
+            href={`/admin/rentals/${item.rentalId}`}
             className="text-blue-600 text-base rounded-full p-2 "
           >
             <svg

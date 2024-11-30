@@ -11,7 +11,7 @@ import WebsiteTemplate from "@/template/WebsiteTemplate";
 async function getAllPackages() {
   try {
     const response = await fetch(
-      `${process.env.API_URI}/api/packages?packageActiveStatus=true`
+      `${process.env.API_URI}/api/packages?packageActiveStatus=true&limit=6`
     );
     const data = await response.json();
     return data;
@@ -29,9 +29,7 @@ export default async function Home() {
       <QuoteForm />
       <WhyChooseUs />
       <OurServices />
-      {packages && (
-        <HomePopularPackages packages={packages.packages} />
-      )}
+      {packages && <HomePopularPackages packages={packages.packages} />}
       <HomeStaticService />
       <Banner />
       <ContactForm />

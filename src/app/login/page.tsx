@@ -7,7 +7,7 @@ export default async function Login() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token");
   if (token?.value) {
-    redirect("/admin/dashboard");
+    redirect("/dashboard/packages/");
   }
   return (
     <div className="flex justify-center h-screen bg-[#EDF4F7] overflow-y-scroll bg-no-repeat bg-cover bg-center overflow-x-hidden items-center ">

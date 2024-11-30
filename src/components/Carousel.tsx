@@ -11,6 +11,7 @@ export default function Carousel({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const carouselContainerRef = useRef<HTMLDivElement>();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleNavigation = (index: number) => {
     if (currentIndex > index) {
@@ -21,20 +22,28 @@ export default function Carousel({
     setCurrentIndex(index);
   };
 
-  // useEffect(() => {
-  //   if (carouselContainerRef.current) {
-  //     setInterval(() => {
-  //       if (currentIndex >= slides.length - 1) {
-  //         handleNavigation(0);
-  //       } else {
-  //         handleNavigation(currentIndex + 1);
-  //       }
-  //     }, 10000);
-  //   }
-  // }, [carouselContainerRef.current]);
-
   // Get the array of children (ensure it's always an array for easier mapping)
   const slides = Array.isArray(children) ? children : [children];
+
+  useEffect(() => {
+    const autoplayInterval = 3000; // Time in milliseconds (3 seconds)
+
+    // Start autoplay when component mounts
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % slides.length; // Loop to the first slide
+        setDirection("next");
+        return nextIndex;
+      });
+    }, autoplayInterval);
+
+    // Clear the interval when the component is unmounted
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [slides.length]);
 
   return (
     <div className="relative w-full">

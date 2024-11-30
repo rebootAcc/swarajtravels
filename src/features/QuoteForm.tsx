@@ -1,4 +1,67 @@
+"use client";
+import { forwardRef, useState } from "react";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+interface ExampleCustomInputProps {
+  value?: string; // Assuming 'value' is a string, you can change it to match your use case
+  onClick?: () => void; // Function type for 'onClick'
+  className?: string; // Optional className, as it's passed as a prop
+}
+
+const ExampleCustomInput = forwardRef<
+  HTMLButtonElement,
+  ExampleCustomInputProps
+>(({ value, onClick, className }, ref) => (
+  <button
+    className={
+      className + " text-typeograph-1 text-sm md:text-xl font-semibold"
+    }
+    onClick={onClick}
+    ref={ref}
+  >
+    Date
+  </button>
+));
+
 export default function QuoteForm() {
+  const [location, setLocation] = useState<string>("darjeeling");
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [number, setNumber] = useState<string>("974632793765");
+
+  function formatDate(inputDate: Date | string | null) {
+    if (!inputDate) {
+      return;
+    }
+    const date = new Date(inputDate); // Create a Date object from the input string
+
+    // Format the date to "Sat, 30 Nov 2024"
+    return date.toLocaleDateString("en-IN", {
+      weekday: "short", // Short weekday name (e.g., "Sat")
+      day: "2-digit", // Day as two digits (e.g., "30")
+      month: "short", // Abbreviated month (e.g., "Nov")
+      year: "numeric", // Full year (e.g., "2024")
+    });
+  }
+
+  const handleSubmit = () => {
+    // Construct the WhatsApp message
+    const whatsappMessage = `Location: ${location}\nMobile: ${number}\nDate: ${formatDate(
+      startDate
+    )}`;
+
+    // Encode the message
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+
+    // Replace with your actual WhatsApp number, including country code, without "+" or "00"
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    const whatsappUrl = isDesktop
+      ? `https://web.whatsapp.com/send?phone=919339013347&text=${encodedMessage}`
+      : ` https://api.whatsapp.com/send?phone=919339013347&text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <section className="shadow-custom-shadow rounded-full px-9 py-6 my-6 mx-6 xl:mx-20 xl:my-10 hidden lg:block">
       <div className="flex justify-between">
@@ -30,41 +93,21 @@ export default function QuoteForm() {
             </svg>
           </span>
           <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-              <h2 className="text-typeograph-1 text-sm md:text-xl font-semibold">
-                Location
-              </h2>
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 13 13"
-                  className="text-typeograph-1 text-sm md:text-xl"
-                  fill="none"
-                >
-                  <mask
-                    id="mask0_4_185"
-                    style={{ maskType: "alpha" }}
-                    maskUnits="userSpaceOnUse"
-                    x="0"
-                    y="0"
-                    width="1em"
-                    height="1em"
-                  >
-                    <rect width="1em" height="1em" fill="#D9D9D9" />
-                  </mask>
-                  <g mask="url(#mask0_4_185)">
-                    <path
-                      d="M6.5 8.34166L3.25 5.09166L4.00833 4.33333L6.5 6.825L8.99167 4.33333L9.75 5.09166L6.5 8.34166Z"
-                      fill="currentColor"
-                    />
-                  </g>
-                </svg>
-              </span>
-            </div>
-            <span className="text-typeograph-2 text-sm md:text-base ps-1">
-              Darjeeling, India
+            <select
+              name=""
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              id=""
+              className="text-typeograph-1 text-sm md:text-xl font-semibold cursor-pointer focus:outline-none"
+            >
+              <option value="darjeeling">Darjeeling</option>
+              <option value="sikkim">Sikkim</option>
+              <option value="dooars">Dooars</option>
+              <option value="kalimpong">Kalimpong</option>
+              <option value="rajastan">Rajastan</option>
+            </select>
+            <span className="text-typeograph-2 text-sm md:text-base ps-1 capitalize">
+              {location}, India
             </span>
           </div>
         </div>
@@ -97,9 +140,11 @@ export default function QuoteForm() {
           </span>
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
-              <h2 className="text-typeograph-1 text-sm md:text-xl font-semibold">
-                Date
-              </h2>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                customInput={<ExampleCustomInput />}
+              />
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +175,7 @@ export default function QuoteForm() {
               </span>
             </div>
             <span className="text-typeograph-2 text-sm md:text-base ps-1">
-              Sun, 25 Dec 2024
+              {formatDate(startDate)}
             </span>
           </div>
         </div>
@@ -196,13 +241,17 @@ export default function QuoteForm() {
                 </svg>
               </span>
             </div>
-            <span className="text-typeograph-2 text-sm md:text-base ps-1">
-              974632 793765
-            </span>
+            <input
+              type="tel"
+              className="text-typeograph-2 text-sm md:text-base ps-1 focus:outline-none"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
+            />
           </div>
         </div>
         <button
           type="button"
+          onClick={handleSubmit}
           className="py-3 bg-primary text-sm md:text-xl font-semibold px-5 rounded-full text-white"
         >
           Get Quote
