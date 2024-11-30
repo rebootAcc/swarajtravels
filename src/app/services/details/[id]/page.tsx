@@ -3,6 +3,7 @@ import Carousel from "@/components/Carousel";
 import ContactComponent from "@/components/ContactComponent";
 import DetailCard from "@/components/DetailCard";
 import SubBanner from "@/components/SubBanner";
+import ServiceDetailsList from "@/features/ServiceDetailsList";
 import WebsiteTemplate from "@/template/WebsiteTemplate";
 import Image from "next/image";
 
@@ -69,20 +70,9 @@ export default async function ServiceDetails({
             <h1 className="text-typeograph-1 text-lg sm:text-2xl xl:text-4xl font-bold">
               Day Wise Itinerary
             </h1>
-            <div className="flex flex-col gap-6">
-              {currentPackage._doc.packageDescriptions.map(
-                (
-                  desc: { title: string; detail: string; _id: string },
-                  index: number
-                ) => (
-                  <Accordian
-                    key={desc._id}
-                    data={desc}
-                    open={index === 0 ? true : false}
-                  />
-                )
-              )}
-            </div>
+            <ServiceDetailsList
+              packageDescriptions={currentPackage._doc.packageDescriptions}
+            />
           </div>
         </div>
         <div className="flex flex-col justify-start gap-4 sm:gap-8 xl:gap-16">
@@ -98,8 +88,9 @@ export default async function ServiceDetails({
           </div>
           <div className="border border-[#ccc] rounded overflow-hidden">
             <ContactComponent
-              normalHeading={"Are You Think You Visit"}
-              highlightedHeading={"Darjeeling?"}
+              normalHeading={"Are You Think to Visit"}
+              highlightedHeading={`${currentPackage._doc.packageCity}?`}
+              currentLocation={currentPackage._doc.packageCity}
             />
           </div>
         </div>

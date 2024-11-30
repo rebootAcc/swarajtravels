@@ -19,6 +19,7 @@ export default function CarouselContainer() {
           <Image
             src={imgsrc}
             width={1440}
+            priority
             height={514}
             className="w-full h-[35vh] lg:h-[75vh] object-cover object-center"
             alt="carousel"

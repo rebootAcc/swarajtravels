@@ -1,5 +1,5 @@
 import { connectToDataBase } from "@/db/connection";
-import Package from "@/models/Package";
+import Rental from "@/models/Rental";
 import { uploadFile, UploadFileResult } from "@/utils/cloudinary";
 import { generateCustomId } from "@/utils/generateCustomId";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,29 +7,22 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     await connectToDataBase();
-
     const body = await request.formData(); // Parse FormData
 
     // Extract non-file fields
-    const packageName = body.get("packageName")?.toString();
-    const packagePrice = body.get("packagePrice")?.toString();
-    const packageDuration = body.get("packageDuration")?.toString();
-    const packageIternary = body.get("packageIternary")?.toString();
-    const packageCoverage = body.get("packageCoverage")?.toString();
-    const packageCity = body.get("packageCity")?.toString();
-    const packageDescriptions = JSON.parse(
-      body.getAll("packageDescriptions")?.toString() || "[]"
-    ); // Parse the package descriptions
-    const packageCover = body.getAll("packageCover"); // Get all files for packageCover
+    const rentalName = body.get("rentalName")?.toString();
+    const rentalSeasonPrice = body.get("rentalSeasonPrice")?.toString();
+    const rentalOffSeasonPrice = body.get("rentalOffSeasonPrice")?.toString();
+    const rentalType = body.get("rentalType")?.toString();
+    const rentalCover = body.getAll("rentalCover"); // Get all files for rentalCover
 
     // Validate required fields
     if (
-      !packageName ||
-      !packagePrice ||
-      !packageDuration ||
-      !packageDescriptions ||
-      !packageCity ||
-      !packageCover.length
+      !rentalName ||
+      !rentalSeasonPrice ||
+      !rentalType ||
+      !rentalOffSeasonPrice ||
+      !rentalCover.length
     ) {
       return NextResponse.json(
         { message: "All fields are required" },
@@ -38,11 +31,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Generate packageId using generateCustomId()
-    const packageId = await generateCustomId(Package, "packageId", "packageId");
+    const rentalId = await generateCustomId(Rental, "rentalId", "rentalId");
 
     // Upload the cover images and collect the result
     const uploadedCovers = [];
-    for (const cover of packageCover) {
+    for (const cover of rentalCover) {
       if (cover instanceof File) {
         const fileBuffer = await cover.arrayBuffer();
 
@@ -64,31 +57,28 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Create a new package document
-    const newPackage = new Package({
-      packageId,
-      packageName,
-      packagePrice,
-      packageDuration,
-      packageIternary,
-      packageCoverage,
-      packageCity,
-      packageActiveStatus: true, // Default to true if not provided
-      packageDescriptions,
-      packageCover: uploadedCovers, // Save the uploaded cover details
+    const newRental = new Rental({
+      rentalId,
+      rentalName,
+      rentalSeasonPrice,
+      rentalOffSeasonPrice,
+      rentalType,
+      rentalActiveStatus: true,
+      rentalCover: uploadedCovers, // Save the uploaded cover details
     });
 
     // Save the package to the database
-    const savedPackage = await newPackage.save();
+    const savedRental = await newRental.save();
 
     // Return the created package as the response
-    return NextResponse.json(savedPackage, { status: 201 });
+    return NextResponse.json(savedRental, { status: 201 });
   } catch (error: unknown) {
     // Error handling
     console.error("Error creating package:", error);
     if (error instanceof Error) {
       return NextResponse.json(
         {
-          message: "An error occurred while creating the package",
+          message: "An error occurred while creating the Rental Service",
           error: error.message,
         },
         { status: 500 }
@@ -107,49 +97,43 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     await connectToDataBase();
 
     const url = new URL(request.url);
-    const packagePrice = url.searchParams.get("packagePrice");
-    const packageActiveStatus = url.searchParams.get("packageActiveStatus");
-    const packageCity = url.searchParams.get("packageCity");
+    const rentalActiveStatus = url.searchParams.get("rentalActiveStatus");
+    const rentalType = url.searchParams.get("rentalType");
     const page = parseInt(url.searchParams.get("page") || "1", 10);
     const limit = parseInt(url.searchParams.get("limit") || "10", 10);
 
     // Initialize filters object
     const filters: any = {};
 
-    // Add filters based on the query parameters
-    if (packagePrice) {
-      filters.packagePrice = packagePrice;
-    }
-
-    if (packageActiveStatus) {
+    if (rentalActiveStatus) {
       // Ensure packageActiveStatus is a boolean value
-      filters.packageActiveStatus = packageActiveStatus === "true";
+      filters.rentalActiveStatus = rentalActiveStatus === "true";
     }
 
-    if (packageCity) {
-      filters.packageCity = { $regex: packageCity, $options: "i" }; // Case-insensitive search
+    if (rentalType) {
+      filters.rentalType = rentalType;
     }
 
     // Set up pagination
     const skip = (page - 1) * limit;
 
     // Query the database with the filters and pagination
-    const packages = await Package.find(filters).skip(skip).limit(limit).exec();
+    const rentals = await Rental.find(filters).skip(skip).limit(limit).exec();
 
     // Get the total count of packages for pagination metadata
-    const totalPackages = await Package.countDocuments(filters);
+    const totalRentals = await Rental.countDocuments(filters);
 
     // Calculate the total number of pages
-    const totalPages = Math.ceil(totalPackages / limit);
+    const totalPages = Math.ceil(totalRentals / limit);
 
     // Return the paginated result
     return NextResponse.json(
       {
-        packages,
+        rentals,
         pagination: {
           currentPage: page,
           totalPages,
-          totalPackages,
+          totalRentals,
           pageSize: limit,
         },
       },
@@ -160,7 +144,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     if (error instanceof Error) {
       return NextResponse.json(
         {
-          message: "An error occurred while getting packages",
+          message: "An error occurred while getting rentals",
           error: error.message,
         },
         { status: 500 }

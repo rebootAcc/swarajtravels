@@ -1,34 +1,36 @@
 "use client";
+import { label } from "framer-motion/client";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
   const services = [
     {
-      label: "Darjeeling Tour & Travel",
+      label: "Darjeeling Tour Packages",
       href: "/services/darjeeling",
     },
     {
-      label: "Sikkim Tour & Travel",
+      label: "Sikkim Tour Packages",
       href: "/services/sikkim",
     },
     {
-      label: "Dooars Tour & Travel",
+      label: "Dooars Tour Packages",
       href: "/services/dooars",
     },
     {
-      label: "Meghalay Tour & Travel",
-      href: "/services/meghalay",
-    },
-    {
-      label: "Kalimpong Tour & Travel",
+      label: "Kalimpong Tour Packages",
       href: "/services/kailmpong",
     },
     {
-      label: "Rajastan Tour & Travel",
+      label: "Rajastan Tour Packages",
       href: "/services/rajastan",
     },
+    {
+      label: "Contact Us",
+      href: "/contact",
+    },
   ];
+
   const quickLinks = [
     {
       label: "Home",
@@ -39,22 +41,23 @@ export default function Footer() {
       href: "/about",
     },
     {
-      label: "Tour Operator",
-      href: "",
+      label: "Bike Rental",
+      href: "/rental/bike",
     },
     {
-      label: "Flight Ticket",
-      href: "",
+      label: "Car Rental",
+      href: "/rental/car",
     },
     {
       label: "Rail Ticket",
       href: "",
     },
     {
-      label: "Bike & Car Rental",
+      label: "Flight Ticket",
       href: "",
     },
   ];
+
   const socialLinks = [
     {
       icon: (
@@ -199,7 +202,9 @@ export default function Footer() {
                   className="hover:text-primary text-base lg:text-lg font-semibold whitespace-nowrap"
                   key={id}
                 >
-                  <Link href={service.href}>&gt;&nbsp;&nbsp;{service.label}</Link>
+                  <Link href={service.href}>
+                    &gt;&nbsp;&nbsp;{service.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -263,7 +268,16 @@ export default function Footer() {
             <Link href="/" className="font-bold">
               Swaraj Travellers
             </Link>{" "}
-            | All Rights Reserved. Privacy Policy
+            | All Rights Reserved.{" "}
+            {[
+              { label: "Privacy Policy", href: "/" },
+              { label: "Refund Policy", href: "/" },
+              { label: "Terms & Conditions", href: "/" },
+            ].map((extra, index) => (
+              <Link href="" key={index}>
+                {extra.label} <span>{"| "}</span>
+              </Link>
+            ))}
           </h1>
           <h1 className="text-base text-center">
             Design &amp; Developed By:{" "}

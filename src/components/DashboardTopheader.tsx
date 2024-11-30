@@ -2,11 +2,14 @@
 
 import useClickOutSide from "@/hooks/useClickOutSide";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-export default function DashBoardTopHeader() {
+export default function DashBoardTopHeader({
+  children,
+}: {
+  children?: ReactNode;
+}) {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] =
     useState<boolean>(false);
 
@@ -34,24 +37,7 @@ export default function DashBoardTopHeader() {
 
   return (
     <header className="flex justify-end gap-3 lg:gap-6 pb-4 xl:pb-5 p-2 px-4 xl:p-4 xl:px-8 border-b border-black/20 flex-1">
-      <Link
-        href="/admin/packages/add"
-        className="flex items-center bg-primary hover:bg-blue-500 gap-3 rounded px-2 xl:px-3 h-[2.5rem] text-xs xlg:text-base xl:text-sm text-[#F5F5F5] transition-colors duration-300 ease-in-out"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1em"
-          height="1em"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M14.5 8a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM7.172 3.034h1.656v4.138h4.138v1.656H8.828v4.138H7.172V8.828H3.034V7.172h4.138V3.034Z"
-            clipRule="evenodd"
-          />
-        </svg>
-        <h3>Add New Package</h3>
-      </Link>
+      {children}
       <div className="flex items-center justify-center relative group">
         <span className="w-[3rem] lg:w-fit">
           <Image
