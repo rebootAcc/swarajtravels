@@ -21,12 +21,16 @@ export default function DetailCard({
         />
       </div>
       <div className="flex flex-col gap-3 items-center">
-        <h2 className="text-base md:text-xl text-typeograph-1 font-bold whitespace-nowrap">
-          {title}
-        </h2>
-        <h3 className="text-typeograph-2 font-medium text-sm md:text-base capitalize">
-          {value}
-        </h3>
+        {title !== "" && (
+          <h2 className="text-base md:text-xl text-typeograph-1 font-bold whitespace-nowrap">
+            {title}
+          </h2>
+        )}
+        {value !== "" && (
+          <h3 className="text-typeograph-2 font-medium text-sm md:text-base capitalize">
+            {value}
+          </h3>
+        )}
       </div>
     </div>
   );

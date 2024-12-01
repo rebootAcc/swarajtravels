@@ -79,7 +79,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
             </label>
           </div>
           <Link
-            href={`/admin/rentals/${item.rentalId}`}
+            href={`/dashboard/rentals/${item.rentalId}`}
             className="text-blue-600 text-base rounded-full p-2 "
           >
             <svg
