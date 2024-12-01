@@ -14,9 +14,7 @@ export default function AddNewPackageForm({
   const [duration, setDuration] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [itinerary, setIternary] = useState<string>("");
-  const [foodCoverage, setFoodCoverage] = useState<boolean>(false);
-  const [hotelCoverage, setHotelCoverage] = useState<boolean>(false);
-  const [transportCoverage, setTransportCoverage] = useState<boolean>(false);
+  const [seatImage, setSeatImage] = useState<File | null>(null);
   const [uploadedPicture1, setUploadedPicture1] = useState<File | null>(null);
   const [uploadedPicture2, setUploadedPicture2] = useState<File | null>(null);
   const router = useRouter();
@@ -52,10 +50,6 @@ export default function AddNewPackageForm({
       setDuration(editedPackage.packageDuration);
       setPrice(editedPackage.packagePrice);
       setIternary(editedPackage.packageIternary);
-      const packageCoverage = JSON.parse(editedPackage.packageCoverage);
-      setFoodCoverage(packageCoverage.food);
-      setHotelCoverage(packageCoverage.hotel);
-      setTransportCoverage(packageCoverage.transport);
       setAllDescriptions(editedPackage.packageDescriptions);
     }
   }, [editedPackage]);
@@ -69,14 +63,9 @@ export default function AddNewPackageForm({
       formdata.append("packageDuration", duration);
       formdata.append("packagePrice", price);
       formdata.append("packageIternary", itinerary);
-      formdata.append(
-        "packageCoverage",
-        JSON.stringify({
-          food: foodCoverage,
-          hotel: hotelCoverage,
-          transport: transportCoverage,
-        })
-      );
+      if (seatImage !== null) {
+        formdata.append("packageSeatDetails", seatImage);
+      }
       formdata.append("packageDescriptions", JSON.stringify(allDescriptions));
       if (uploadedPicture1 !== null) {
         formdata.append("packageCover", uploadedPicture1);
@@ -88,8 +77,11 @@ export default function AddNewPackageForm({
         method: "POST",
         body: formdata,
       });
+      if (!response.ok) {
+        return;
+      }
       const result = await response.json();
-      router.push("/admin/dashboard");
+      router.push("/dashboard/packages");
     } catch (error) {
       console.log(error);
     }
@@ -110,17 +102,15 @@ export default function AddNewPackageForm({
             packageDuration: duration,
             packagePrice: price,
             packageIternary: itinerary,
-            packageCoverage: JSON.stringify({
-              food: foodCoverage,
-              hotel: hotelCoverage,
-              transport: transportCoverage,
-            }),
             packageDescriptions: allDescriptions,
           },
         }),
       });
       const result = await response.json();
-      router.push("/admin/dashboard");
+      if (!response.ok) {
+        return;
+      }
+      router.push("/dashboard/packages");
     } catch (error) {
       console.log(error);
     }
@@ -213,52 +203,33 @@ export default function AddNewPackageForm({
             </span>
           )}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 place-items-stretch">
-          <div className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              id="food"
-              checked={foodCoverage}
-              onChange={(e) => setFoodCoverage(e.target.checked)}
-              className="bg-[#f5f5f5] rounded-md placeholder-typeograph-2 text-base accent-[#f5f5f5] checked:border checked:border-[#f5f5f5] text-typeograph-1"
-            />
-            <label
-              htmlFor="food"
-              className="text-base xl:text-lg text-typeograph-1 cursor-pointer"
+        <div className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none flex items-center">
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            id="seat"
+            disabled={uploadFileDisable}
+            onChange={(e) => {
+              const file = e.target.files ? e.target.files[0] : null;
+              setSeatImage(file);
+            }}
+          />
+          <label
+            htmlFor="seat"
+            className="capitalize text-typeograph-2 cursor-pointer w-full font-medium inline-flex gap-2 items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              className="text-xl"
+              fill="currentColor"
             >
-              Food Coverage
-            </label>
-          </div>
-          <div className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              id="hotel"
-              checked={hotelCoverage}
-              onChange={(e) => setHotelCoverage(e.target.checked)}
-              className="bg-[#f5f5f5] rounded-md placeholder-typeograph-2 text-base accent-[#f5f5f5] checked:border checked:border-[#f5f5f5] text-typeograph-1"
-            />
-            <label
-              htmlFor="hotel"
-              className="text-base xl:text-lg text-typeograph-1 cursor-pointer"
-            >
-              Hotel Coverage
-            </label>
-          </div>
-          <div className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              id="transport"
-              checked={transportCoverage}
-              onChange={(e) => setTransportCoverage(e.target.checked)}
-              className="bg-[#f5f5f5] rounded-md placeholder-typeograph-2 text-base accent-[#f5f5f5] checked:border checked:border-[#f5f5f5] text-typeograph-1"
-            />
-            <label
-              htmlFor="transport"
-              className="text-base xl:text-lg text-typeograph-1 cursor-pointer"
-            >
-              Transport Coverage
-            </label>
-          </div>
+              <path d="M15 10H12.975C12.6917 10 12.4583 9.90417 12.275 9.7125C12.0917 9.52083 12 9.28333 12 9C12 8.71667 12.0958 8.47917 12.2875 8.2875C12.4792 8.09583 12.7167 8 13 8H15V6C15 5.71667 15.0958 5.47917 15.2875 5.2875C15.4792 5.09583 15.7167 5 16 5C16.2833 5 16.5208 5.09583 16.7125 5.2875C16.9042 5.47917 17 5.71667 17 6V8H19C19.2833 8 19.5208 8.09583 19.7125 8.2875C19.9042 8.47917 20 8.71667 20 9C20 9.28333 19.9042 9.52083 19.7125 9.7125C19.5208 9.90417 19.2833 10 19 10H17V12C17 12.2833 16.9042 12.5208 16.7125 12.7125C16.5208 12.9042 16.2833 13 16 13C15.7167 13 15.4792 12.9042 15.2875 12.7125C15.0958 12.5208 15 12.2833 15 12V10ZM8 10H5C3.61667 10 2.4375 9.5125 1.4625 8.5375C0.4875 7.5625 0 6.38333 0 5C0 3.61667 0.4875 2.4375 1.4625 1.4625C2.4375 0.4875 3.61667 0 5 0H8C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1C9 1.28333 8.90417 1.52083 8.7125 1.7125C8.52083 1.90417 8.28333 2 8 2H5C4.16667 2 3.45833 2.29167 2.875 2.875C2.29167 3.45833 2 4.16667 2 5C2 5.83333 2.29167 6.54167 2.875 7.125C3.45833 7.70833 4.16667 8 5 8H8C8.28333 8 8.52083 8.09583 8.7125 8.2875C8.90417 8.47917 9 8.71667 9 9C9 9.28333 8.90417 9.52083 8.7125 9.7125C8.52083 9.90417 8.28333 10 8 10ZM7 6C6.71667 6 6.47917 5.90417 6.2875 5.7125C6.09583 5.52083 6 5.28333 6 5C6 4.71667 6.09583 4.47917 6.2875 4.2875C6.47917 4.09583 6.71667 4 7 4H13C13.2833 4 13.5208 4.09583 13.7125 4.2875C13.9042 4.47917 14 4.71667 14 5C14 5.28333 13.9042 5.52083 13.7125 5.7125C13.5208 5.90417 13.2833 6 13 6H7ZM20 5H18C18 4.16667 17.7083 3.45833 17.125 2.875C16.5417 2.29167 15.8333 2 15 2H11.975C11.6917 2 11.4583 1.90417 11.275 1.7125C11.0917 1.52083 11 1.28333 11 1C11 0.716667 11.0958 0.479167 11.2875 0.2875C11.4792 0.0958333 11.7167 0 12 0H15C16.3833 0 17.5625 0.4875 18.5375 1.4625C19.5125 2.4375 20 3.61667 20 5Z" />
+            </svg>
+            <span>upload seat details</span>
+          </label>
         </div>
         <div className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none flex items-center">
           <input
@@ -285,7 +256,7 @@ export default function AddNewPackageForm({
             >
               <path d="M15 10H12.975C12.6917 10 12.4583 9.90417 12.275 9.7125C12.0917 9.52083 12 9.28333 12 9C12 8.71667 12.0958 8.47917 12.2875 8.2875C12.4792 8.09583 12.7167 8 13 8H15V6C15 5.71667 15.0958 5.47917 15.2875 5.2875C15.4792 5.09583 15.7167 5 16 5C16.2833 5 16.5208 5.09583 16.7125 5.2875C16.9042 5.47917 17 5.71667 17 6V8H19C19.2833 8 19.5208 8.09583 19.7125 8.2875C19.9042 8.47917 20 8.71667 20 9C20 9.28333 19.9042 9.52083 19.7125 9.7125C19.5208 9.90417 19.2833 10 19 10H17V12C17 12.2833 16.9042 12.5208 16.7125 12.7125C16.5208 12.9042 16.2833 13 16 13C15.7167 13 15.4792 12.9042 15.2875 12.7125C15.0958 12.5208 15 12.2833 15 12V10ZM8 10H5C3.61667 10 2.4375 9.5125 1.4625 8.5375C0.4875 7.5625 0 6.38333 0 5C0 3.61667 0.4875 2.4375 1.4625 1.4625C2.4375 0.4875 3.61667 0 5 0H8C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1C9 1.28333 8.90417 1.52083 8.7125 1.7125C8.52083 1.90417 8.28333 2 8 2H5C4.16667 2 3.45833 2.29167 2.875 2.875C2.29167 3.45833 2 4.16667 2 5C2 5.83333 2.29167 6.54167 2.875 7.125C3.45833 7.70833 4.16667 8 5 8H8C8.28333 8 8.52083 8.09583 8.7125 8.2875C8.90417 8.47917 9 8.71667 9 9C9 9.28333 8.90417 9.52083 8.7125 9.7125C8.52083 9.90417 8.28333 10 8 10ZM7 6C6.71667 6 6.47917 5.90417 6.2875 5.7125C6.09583 5.52083 6 5.28333 6 5C6 4.71667 6.09583 4.47917 6.2875 4.2875C6.47917 4.09583 6.71667 4 7 4H13C13.2833 4 13.5208 4.09583 13.7125 4.2875C13.9042 4.47917 14 4.71667 14 5C14 5.28333 13.9042 5.52083 13.7125 5.7125C13.5208 5.90417 13.2833 6 13 6H7ZM20 5H18C18 4.16667 17.7083 3.45833 17.125 2.875C16.5417 2.29167 15.8333 2 15 2H11.975C11.6917 2 11.4583 1.90417 11.275 1.7125C11.0917 1.52083 11 1.28333 11 1C11 0.716667 11.0958 0.479167 11.2875 0.2875C11.4792 0.0958333 11.7167 0 12 0H15C16.3833 0 17.5625 0.4875 18.5375 1.4625C19.5125 2.4375 20 3.61667 20 5Z" />
             </svg>
-            <span>upload picture</span>
+            <span>upload cover picture 1</span>
           </label>
         </div>
         <div className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none flex items-center">
@@ -313,7 +284,7 @@ export default function AddNewPackageForm({
             >
               <path d="M15 10H12.975C12.6917 10 12.4583 9.90417 12.275 9.7125C12.0917 9.52083 12 9.28333 12 9C12 8.71667 12.0958 8.47917 12.2875 8.2875C12.4792 8.09583 12.7167 8 13 8H15V6C15 5.71667 15.0958 5.47917 15.2875 5.2875C15.4792 5.09583 15.7167 5 16 5C16.2833 5 16.5208 5.09583 16.7125 5.2875C16.9042 5.47917 17 5.71667 17 6V8H19C19.2833 8 19.5208 8.09583 19.7125 8.2875C19.9042 8.47917 20 8.71667 20 9C20 9.28333 19.9042 9.52083 19.7125 9.7125C19.5208 9.90417 19.2833 10 19 10H17V12C17 12.2833 16.9042 12.5208 16.7125 12.7125C16.5208 12.9042 16.2833 13 16 13C15.7167 13 15.4792 12.9042 15.2875 12.7125C15.0958 12.5208 15 12.2833 15 12V10ZM8 10H5C3.61667 10 2.4375 9.5125 1.4625 8.5375C0.4875 7.5625 0 6.38333 0 5C0 3.61667 0.4875 2.4375 1.4625 1.4625C2.4375 0.4875 3.61667 0 5 0H8C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1C9 1.28333 8.90417 1.52083 8.7125 1.7125C8.52083 1.90417 8.28333 2 8 2H5C4.16667 2 3.45833 2.29167 2.875 2.875C2.29167 3.45833 2 4.16667 2 5C2 5.83333 2.29167 6.54167 2.875 7.125C3.45833 7.70833 4.16667 8 5 8H8C8.28333 8 8.52083 8.09583 8.7125 8.2875C8.90417 8.47917 9 8.71667 9 9C9 9.28333 8.90417 9.52083 8.7125 9.7125C8.52083 9.90417 8.28333 10 8 10ZM7 6C6.71667 6 6.47917 5.90417 6.2875 5.7125C6.09583 5.52083 6 5.28333 6 5C6 4.71667 6.09583 4.47917 6.2875 4.2875C6.47917 4.09583 6.71667 4 7 4H13C13.2833 4 13.5208 4.09583 13.7125 4.2875C13.9042 4.47917 14 4.71667 14 5C14 5.28333 13.9042 5.52083 13.7125 5.7125C13.5208 5.90417 13.2833 6 13 6H7ZM20 5H18C18 4.16667 17.7083 3.45833 17.125 2.875C16.5417 2.29167 15.8333 2 15 2H11.975C11.6917 2 11.4583 1.90417 11.275 1.7125C11.0917 1.52083 11 1.28333 11 1C11 0.716667 11.0958 0.479167 11.2875 0.2875C11.4792 0.0958333 11.7167 0 12 0H15C16.3833 0 17.5625 0.4875 18.5375 1.4625C19.5125 2.4375 20 3.61667 20 5Z" />
             </svg>
-            <span>upload picture</span>
+            <span>upload cover picture 2</span>
           </label>
         </div>
       </div>

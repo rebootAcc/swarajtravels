@@ -3,10 +3,10 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 export default function AddNewRentalForm({
-  editedPackage,
+  editedReantal,
   uploadFileDisable = false,
 }: {
-  editedPackage?: any;
+  editedReantal?: any;
   uploadFileDisable?: boolean;
 }) {
   const [type, setType] = useState<string>("");
@@ -23,11 +23,15 @@ export default function AddNewRentalForm({
   }>({});
 
   useEffect(() => {
-    if (!editedPackage) {
+    if (!editedReantal) {
       return;
     } else {
+      setType(editedReantal.rentalType);
+      setName(editedReantal.rentalName);
+      setSeasonPrice(editedReantal.rentalSeasonPrice);
+      setOffSeasonPrice(editedReantal.rentalOffSeasonPrice);
     }
-  }, [editedPackage]);
+  }, [editedReantal]);
 
   const addNewRental = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,8 +82,8 @@ export default function AddNewRentalForm({
     <form
       className="flex flex-col gap-8"
       onSubmit={(e) => {
-        if (editedPackage) {
-          updateNewPackage(e, editedPackage.packageId);
+        if (editedReantal) {
+          updateNewPackage(e, editedReantal.rentalId);
         } else {
           addNewRental(e);
         }

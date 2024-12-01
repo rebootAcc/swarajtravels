@@ -106,6 +106,23 @@ export async function DELETE(
         }
       }
     }
+
+    if (packageToDelete.packageSeatDetails) {
+      // Loop through each file in the packageCover array and delete them from Cloudinary
+      const { publicId }: { publicId: string } =
+        packageToDelete.packageSeatDetails;
+      const result: any = await deleteFile(publicId); // Call deleteFile utility
+      if (result.error) {
+        console.error(
+          "Error deleting file from Cloudinary:",
+          result.error.message
+        );
+        return NextResponse.json(
+          { message: "Failed delete from Cloudinary" },
+          { status: 500 }
+        );
+      }
+    }
     await Package.deleteOne({ id: packageToDelete._id });
     // Return success message
     return NextResponse.json(

@@ -11,6 +11,11 @@ interface PackageCover {
   publicId: string;
 }
 
+interface PackageSeatDetails {
+  path: string;
+  publicId: string;
+}
+
 // Define the interface for the Package document
 interface PackageDocument extends Document {
   packageId: string;
@@ -19,7 +24,7 @@ interface PackageDocument extends Document {
   packageDuration: number;
   packageIternary?: string;
   packageActiveStatus: boolean;
-  packageCoverage?: object;
+  packageSeatDetails?: PackageSeatDetails;
   packageCity?: string;
   packageDescriptions: PackageDescription[];
   packageCover: PackageCover[];
@@ -53,8 +58,12 @@ const packageSchema = new Schema<PackageDocument>(
       default: true,
       required: true,
     },
-    packageCoverage: {
-      type: Object,
+    packageSeatDetails: {
+      type: {
+        path: { type: String, required: true },
+        publicId: { type: String, required: true },
+      },
+
       required: true,
     },
     packageCity: {

@@ -15,7 +15,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const packagePrice = body.get("packagePrice")?.toString();
     const packageDuration = body.get("packageDuration")?.toString();
     const packageIternary = body.get("packageIternary")?.toString();
-    const packageCoverage = body.get("packageCoverage")?.toString();
+    const packageSeatDetails = body.get("packageSeatDetails");
     const packageCity = body.get("packageCity")?.toString();
     const packageDescriptions = JSON.parse(
       body.getAll("packageDescriptions")?.toString() || "[]"
@@ -29,7 +29,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       !packageDuration ||
       !packageDescriptions ||
       !packageCity ||
-      !packageCover.length
+      !packageCover.length ||
+      !packageSeatDetails
     ) {
       return NextResponse.json(
         { message: "All fields are required" },
@@ -63,6 +64,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }
     }
 
+    let uploadedPackageSeatDetails = { path: "", publicId: "" };
+    if (packageSeatDetails instanceof File) {
+      const fileBuffer = await packageSeatDetails.arrayBuffer();
+
+      const mimeType = packageSeatDetails.type;
+      const encoding = "base64";
+      const base64Data = Buffer.from(fileBuffer).toString("base64");
+
+      // this will be used to upload the file
+      const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
+
+      const result: UploadFileResult | any = await uploadFile(fileUri); // Pass the file and its MIME type to uploadFile
+      if (result.public_id) {
+        uploadedPackageSeatDetails.path = result.secure_url;
+        uploadedPackageSeatDetails.publicId = result.public_id;
+      }
+    }
+
     // Create a new package document
     const newPackage = new Package({
       packageId,
@@ -70,7 +89,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       packagePrice,
       packageDuration,
       packageIternary,
-      packageCoverage,
+      packageSeatDetails: uploadedPackageSeatDetails,
       packageCity,
       packageActiveStatus: true, // Default to true if not provided
       packageDescriptions,

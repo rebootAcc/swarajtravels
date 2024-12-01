@@ -79,7 +79,7 @@ export default function PacakagesTable({ tableData }: { tableData: any }) {
             </label>
           </div>
           <Link
-            href={`/admin/packages/${item.packageId}`}
+            href={`/dashboard/packages/${item.packageId}`}
             className="text-blue-600 text-base rounded-full p-2 "
           >
             <svg

@@ -137,20 +137,12 @@ export default function Navbar() {
       },
     },
     {
-      href: null,
+      href: "/rental/car",
       label: "Car Rental",
-      handelClick: () => {
-        setContactForm(true);
-        toggleOpen();
-      },
     },
     {
-      href: null,
+      href: "/rental/bike",
       label: "Bike Rental",
-      handelClick: () => {
-        setContactForm(true);
-        toggleOpen();
-      },
     },
     {
       href: "/contact",

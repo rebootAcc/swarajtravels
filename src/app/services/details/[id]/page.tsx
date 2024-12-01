@@ -41,6 +41,11 @@ export default async function ServiceDetails({
       value: "₹" + " " + currentPackage._doc.packagePrice + " " + "/-",
       icon: "/icons/price-icon.png",
     },
+    {
+      title: "",
+      value: "",
+      icon: currentPackage._doc.packageSeatDetails.path,
+    },
   ];
 
   return (
