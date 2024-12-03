@@ -40,7 +40,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
       });
       const result = await response.json();
       setAllPAck((prevPackages: any) => {
-        return prevPackages.map((pack: any) => pack._id !== result._id);
+        return prevPackages.map((pack: any) => pack._id !== packId);
       });
     } catch (error) {
       console.error("Error Deleting rental status", error);

@@ -40,7 +40,7 @@ export default function PacakagesTable({ tableData }: { tableData: any }) {
       });
       const result = await response.json();
       setAllPAck((prevPackages: any) => {
-        return prevPackages.map((pack: any) => pack._id !== result._id);
+        return prevPackages.map((pack: any) => pack._id !== packId);
       });
     } catch (error) {
       console.error("Error updating package status", error);
