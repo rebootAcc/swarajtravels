@@ -32,13 +32,12 @@ export default function AddNewPackageForm({
     detail: "",
   });
   const [errors, setErrors] = useState<{
-    city?: { message: string };
-    name?: { message: string };
-    duration?: { message: string };
-    price?: { message: string };
-    itiernary?: { message: string };
-    descriptionTitle?: { message: string };
-    descriptionDetail?: { message: string };
+    city?: boolean;
+    name?: boolean;
+    duration?: boolean;
+    price?: boolean;
+    itiernary?: boolean;
+    description?: boolean;
   }>({});
 
   useEffect(() => {
@@ -56,6 +55,30 @@ export default function AddNewPackageForm({
 
   const addNewPackage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (city === "") {
+      setErrors((prev) => ({ ...prev, city: true }));
+      return;
+    }
+    if (name === "") {
+      setErrors((prev) => ({ ...prev, name: true }));
+      return;
+    }
+    if (duration === "") {
+      setErrors((prev) => ({ ...prev, duration: true }));
+      return;
+    }
+    if (price === "") {
+      setErrors((prev) => ({ ...prev, price: true }));
+      return;
+    }
+    if (itinerary === "") {
+      setErrors((prev) => ({ ...prev, itiernary: true }));
+      return;
+    }
+    if (allDescriptions.length < 1) {
+      setErrors((prev) => ({ ...prev, description: true }));
+      return;
+    }
     try {
       const formdata = new FormData();
       formdata.append("packageCity", city);
@@ -92,6 +115,30 @@ export default function AddNewPackageForm({
     pId: string
   ) => {
     e.preventDefault();
+    if (city === "") {
+      setErrors((prev) => ({ ...prev, city: true }));
+      return;
+    }
+    if (name === "") {
+      setErrors((prev) => ({ ...prev, name: true }));
+      return;
+    }
+    if (duration === "") {
+      setErrors((prev) => ({ ...prev, duration: true }));
+      return;
+    }
+    if (price === "") {
+      setErrors((prev) => ({ ...prev, price: true }));
+      return;
+    }
+    if (itinerary === "") {
+      setErrors((prev) => ({ ...prev, itiernary: true }));
+      return;
+    }
+    if (allDescriptions.length < 1) {
+      setErrors((prev) => ({ ...prev, description: true }));
+      return;
+    }
     try {
       const response = await fetch(`/api/packages/${pId}`, {
         method: "PUT",
@@ -130,9 +177,14 @@ export default function AddNewPackageForm({
       <div className="grid grid-cols-2 gap-8">
         <div>
           <select
-            className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none"
+            className={`h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none ${
+              errors.city ? "border border-red-600" : "border-0"
+            }`}
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, city: false }));
+              setCity(e.target.value);
+            }}
           >
             <option value="">Select City/State</option>
             <option value="darjeeling">Darjeeling</option>
@@ -141,67 +193,62 @@ export default function AddNewPackageForm({
             <option value="sikkim">Sikkim</option>
             <option value="rajastan">Rajastan</option>
           </select>
-          {errors.city && (
-            <span className="text-red-600 font-medium text-sm">
-              {errors.city.message}
-            </span>
-          )}
         </div>
         <div>
           <input
             type="text"
-            className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none"
+            className={`h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none ${
+              errors.name ? "border border-red-600" : "border-0"
+            }`}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, name: false }));
+              setName(e.target.value);
+            }}
             placeholder="Tour Package Name"
           />
-          {errors.name && (
-            <span className="text-red-600 font-medium text-sm">
-              {errors.name.message}
-            </span>
-          )}
         </div>
         <div>
           <input
             type="number"
-            className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none"
+            className={`h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none ${
+              errors.duration ? "border border-red-600" : "border-0"
+            }`}
             value={duration}
-            onChange={(e) => setDuration(e.target.value)}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, duration: false }));
+              setDuration(e.target.value);
+            }}
             placeholder="Select Duration (8 Days)"
           />
-          {errors.duration && (
-            <span className="text-red-600 font-medium text-sm">
-              {errors.duration.message}
-            </span>
-          )}
         </div>
         <div>
           <input
             type="number"
-            className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none"
+            className={`h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none ${
+              errors.price ? "border border-red-600" : "border-0"
+            }`}
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, price: false }));
+              setPrice(e.target.value);
+            }}
             placeholder="Price (₹3000)"
           />
-          {errors.price && (
-            <span className="text-red-600 font-medium text-sm">
-              {errors.price.message}
-            </span>
-          )}
         </div>
         <div>
           <input
             type="text"
-            className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none"
+            className={`h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none ${
+              errors.itiernary ? "border border-red-600" : "border-0"
+            }`}
             value={itinerary}
-            onChange={(e) => setIternary(e.target.value)}
+            onChange={(e) => {
+              setErrors((prev) => ({ ...prev, itiernary: false }));
+              setIternary(e.target.value);
+            }}
             placeholder="Put Itinerary of Tour (7 Nights | 8 Days)"
           />
-          {errors.itiernary && (
-            <span className="text-red-600 font-medium text-sm">
-              {errors.itiernary.message}
-            </span>
-          )}
         </div>
         <div className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none flex items-center">
           <input
@@ -228,7 +275,7 @@ export default function AddNewPackageForm({
             >
               <path d="M15 10H12.975C12.6917 10 12.4583 9.90417 12.275 9.7125C12.0917 9.52083 12 9.28333 12 9C12 8.71667 12.0958 8.47917 12.2875 8.2875C12.4792 8.09583 12.7167 8 13 8H15V6C15 5.71667 15.0958 5.47917 15.2875 5.2875C15.4792 5.09583 15.7167 5 16 5C16.2833 5 16.5208 5.09583 16.7125 5.2875C16.9042 5.47917 17 5.71667 17 6V8H19C19.2833 8 19.5208 8.09583 19.7125 8.2875C19.9042 8.47917 20 8.71667 20 9C20 9.28333 19.9042 9.52083 19.7125 9.7125C19.5208 9.90417 19.2833 10 19 10H17V12C17 12.2833 16.9042 12.5208 16.7125 12.7125C16.5208 12.9042 16.2833 13 16 13C15.7167 13 15.4792 12.9042 15.2875 12.7125C15.0958 12.5208 15 12.2833 15 12V10ZM8 10H5C3.61667 10 2.4375 9.5125 1.4625 8.5375C0.4875 7.5625 0 6.38333 0 5C0 3.61667 0.4875 2.4375 1.4625 1.4625C2.4375 0.4875 3.61667 0 5 0H8C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1C9 1.28333 8.90417 1.52083 8.7125 1.7125C8.52083 1.90417 8.28333 2 8 2H5C4.16667 2 3.45833 2.29167 2.875 2.875C2.29167 3.45833 2 4.16667 2 5C2 5.83333 2.29167 6.54167 2.875 7.125C3.45833 7.70833 4.16667 8 5 8H8C8.28333 8 8.52083 8.09583 8.7125 8.2875C8.90417 8.47917 9 8.71667 9 9C9 9.28333 8.90417 9.52083 8.7125 9.7125C8.52083 9.90417 8.28333 10 8 10ZM7 6C6.71667 6 6.47917 5.90417 6.2875 5.7125C6.09583 5.52083 6 5.28333 6 5C6 4.71667 6.09583 4.47917 6.2875 4.2875C6.47917 4.09583 6.71667 4 7 4H13C13.2833 4 13.5208 4.09583 13.7125 4.2875C13.9042 4.47917 14 4.71667 14 5C14 5.28333 13.9042 5.52083 13.7125 5.7125C13.5208 5.90417 13.2833 6 13 6H7ZM20 5H18C18 4.16667 17.7083 3.45833 17.125 2.875C16.5417 2.29167 15.8333 2 15 2H11.975C11.6917 2 11.4583 1.90417 11.275 1.7125C11.0917 1.52083 11 1.28333 11 1C11 0.716667 11.0958 0.479167 11.2875 0.2875C11.4792 0.0958333 11.7167 0 12 0H15C16.3833 0 17.5625 0.4875 18.5375 1.4625C19.5125 2.4375 20 3.61667 20 5Z" />
             </svg>
-            <span>upload seat details</span>
+            <span>{seatImage ? seatImage.name : "upload seat details"}</span>
           </label>
         </div>
         <div className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none flex items-center">
@@ -256,7 +303,11 @@ export default function AddNewPackageForm({
             >
               <path d="M15 10H12.975C12.6917 10 12.4583 9.90417 12.275 9.7125C12.0917 9.52083 12 9.28333 12 9C12 8.71667 12.0958 8.47917 12.2875 8.2875C12.4792 8.09583 12.7167 8 13 8H15V6C15 5.71667 15.0958 5.47917 15.2875 5.2875C15.4792 5.09583 15.7167 5 16 5C16.2833 5 16.5208 5.09583 16.7125 5.2875C16.9042 5.47917 17 5.71667 17 6V8H19C19.2833 8 19.5208 8.09583 19.7125 8.2875C19.9042 8.47917 20 8.71667 20 9C20 9.28333 19.9042 9.52083 19.7125 9.7125C19.5208 9.90417 19.2833 10 19 10H17V12C17 12.2833 16.9042 12.5208 16.7125 12.7125C16.5208 12.9042 16.2833 13 16 13C15.7167 13 15.4792 12.9042 15.2875 12.7125C15.0958 12.5208 15 12.2833 15 12V10ZM8 10H5C3.61667 10 2.4375 9.5125 1.4625 8.5375C0.4875 7.5625 0 6.38333 0 5C0 3.61667 0.4875 2.4375 1.4625 1.4625C2.4375 0.4875 3.61667 0 5 0H8C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1C9 1.28333 8.90417 1.52083 8.7125 1.7125C8.52083 1.90417 8.28333 2 8 2H5C4.16667 2 3.45833 2.29167 2.875 2.875C2.29167 3.45833 2 4.16667 2 5C2 5.83333 2.29167 6.54167 2.875 7.125C3.45833 7.70833 4.16667 8 5 8H8C8.28333 8 8.52083 8.09583 8.7125 8.2875C8.90417 8.47917 9 8.71667 9 9C9 9.28333 8.90417 9.52083 8.7125 9.7125C8.52083 9.90417 8.28333 10 8 10ZM7 6C6.71667 6 6.47917 5.90417 6.2875 5.7125C6.09583 5.52083 6 5.28333 6 5C6 4.71667 6.09583 4.47917 6.2875 4.2875C6.47917 4.09583 6.71667 4 7 4H13C13.2833 4 13.5208 4.09583 13.7125 4.2875C13.9042 4.47917 14 4.71667 14 5C14 5.28333 13.9042 5.52083 13.7125 5.7125C13.5208 5.90417 13.2833 6 13 6H7ZM20 5H18C18 4.16667 17.7083 3.45833 17.125 2.875C16.5417 2.29167 15.8333 2 15 2H11.975C11.6917 2 11.4583 1.90417 11.275 1.7125C11.0917 1.52083 11 1.28333 11 1C11 0.716667 11.0958 0.479167 11.2875 0.2875C11.4792 0.0958333 11.7167 0 12 0H15C16.3833 0 17.5625 0.4875 18.5375 1.4625C19.5125 2.4375 20 3.61667 20 5Z" />
             </svg>
-            <span>upload cover picture 1</span>
+            <span>
+              {uploadedPicture1
+                ? uploadedPicture1.name
+                : "upload cover picture 1"}
+            </span>
           </label>
         </div>
         <div className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none flex items-center">
@@ -284,11 +335,19 @@ export default function AddNewPackageForm({
             >
               <path d="M15 10H12.975C12.6917 10 12.4583 9.90417 12.275 9.7125C12.0917 9.52083 12 9.28333 12 9C12 8.71667 12.0958 8.47917 12.2875 8.2875C12.4792 8.09583 12.7167 8 13 8H15V6C15 5.71667 15.0958 5.47917 15.2875 5.2875C15.4792 5.09583 15.7167 5 16 5C16.2833 5 16.5208 5.09583 16.7125 5.2875C16.9042 5.47917 17 5.71667 17 6V8H19C19.2833 8 19.5208 8.09583 19.7125 8.2875C19.9042 8.47917 20 8.71667 20 9C20 9.28333 19.9042 9.52083 19.7125 9.7125C19.5208 9.90417 19.2833 10 19 10H17V12C17 12.2833 16.9042 12.5208 16.7125 12.7125C16.5208 12.9042 16.2833 13 16 13C15.7167 13 15.4792 12.9042 15.2875 12.7125C15.0958 12.5208 15 12.2833 15 12V10ZM8 10H5C3.61667 10 2.4375 9.5125 1.4625 8.5375C0.4875 7.5625 0 6.38333 0 5C0 3.61667 0.4875 2.4375 1.4625 1.4625C2.4375 0.4875 3.61667 0 5 0H8C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1C9 1.28333 8.90417 1.52083 8.7125 1.7125C8.52083 1.90417 8.28333 2 8 2H5C4.16667 2 3.45833 2.29167 2.875 2.875C2.29167 3.45833 2 4.16667 2 5C2 5.83333 2.29167 6.54167 2.875 7.125C3.45833 7.70833 4.16667 8 5 8H8C8.28333 8 8.52083 8.09583 8.7125 8.2875C8.90417 8.47917 9 8.71667 9 9C9 9.28333 8.90417 9.52083 8.7125 9.7125C8.52083 9.90417 8.28333 10 8 10ZM7 6C6.71667 6 6.47917 5.90417 6.2875 5.7125C6.09583 5.52083 6 5.28333 6 5C6 4.71667 6.09583 4.47917 6.2875 4.2875C6.47917 4.09583 6.71667 4 7 4H13C13.2833 4 13.5208 4.09583 13.7125 4.2875C13.9042 4.47917 14 4.71667 14 5C14 5.28333 13.9042 5.52083 13.7125 5.7125C13.5208 5.90417 13.2833 6 13 6H7ZM20 5H18C18 4.16667 17.7083 3.45833 17.125 2.875C16.5417 2.29167 15.8333 2 15 2H11.975C11.6917 2 11.4583 1.90417 11.275 1.7125C11.0917 1.52083 11 1.28333 11 1C11 0.716667 11.0958 0.479167 11.2875 0.2875C11.4792 0.0958333 11.7167 0 12 0H15C16.3833 0 17.5625 0.4875 18.5375 1.4625C19.5125 2.4375 20 3.61667 20 5Z" />
             </svg>
-            <span>upload cover picture 2</span>
+            <span>
+              {uploadedPicture2
+                ? uploadedPicture2.name
+                : "upload cover picture 2"}
+            </span>
           </label>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div
+        className={`flex flex-col gap-4 ${
+          errors.description ? "border border-red-600" : "border-0"
+        }`}
+      >
         <input
           type="text"
           className="h-[4rem] px-2 xl:px-7 bg-[#f5f5f5] w-full rounded-md placeholder-typeograph-2 text-base text-typeograph-1 outline-none"
@@ -313,12 +372,13 @@ export default function AddNewPackageForm({
       <button
         type="button"
         className="flex items-center bg-primary hover:bg-secondary gap-3 rounded px-2 xl:px-3 h-[2.5rem] text-xs xlg:text-base xl:text-sm text-[#F5F5F5] transition-colors duration-300 ease-in-out self-start"
-        onClick={() =>
+        onClick={() => {
+          setErrors((prev) => ({ ...prev, description: false }));
           setAllDescriptions((prev) => [
             ...prev,
             { title: description.title, detail: description.detail },
-          ])
-        }
+          ]);
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
