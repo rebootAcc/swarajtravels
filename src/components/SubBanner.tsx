@@ -12,6 +12,7 @@ export default function SubBanner({
       <Image
         src="/assets/carousel-image-1.png"
         alt="banner"
+        priority
         width={1440}
         height={250}
         className="w-full h-64 object-cover"

@@ -218,6 +218,15 @@ export default function AddNewPackageForm({
             onChange={(e) => {
               setErrors((prev) => ({ ...prev, duration: false }));
               setDuration(e.target.value);
+              if (parseInt(e.target.value) > 1) {
+                setIternary(
+                  `${parseInt(e.target.value, 10) - 1} Nigths | ${parseInt(
+                    e.target.value
+                  )} Days`
+                );
+              } else {
+                setIternary("");
+              }
             }}
             placeholder="Select Duration (8 Days)"
           />
@@ -378,6 +387,7 @@ export default function AddNewPackageForm({
             ...prev,
             { title: description.title, detail: description.detail },
           ]);
+          setDescription((prev) => ({ ...prev, title: "", detail: "" }));
         }}
       >
         <svg
@@ -404,29 +414,63 @@ export default function AddNewPackageForm({
               <h1 className="text-typeograph-1 text-lg xl:text-2xl font-bold">
                 {desc.title}
               </h1>
-              <button
-                type="button"
-                className="bg-white text-red-600 text-base border border-red-600 py-2 px-4 rounded"
-                onClick={() =>
-                  setAllDescriptions((prev) =>
-                    prev.filter((_, i) => i !== index)
-                  )
-                }
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDescription((prev) => ({
+                      ...prev,
+                      title: desc.title,
+                      detail: desc.detail,
+                    }));
+                    setAllDescriptions((prev) =>
+                      prev.filter((_, i) => i !== index)
+                    );
+                  }}
+                  className="bg-white text-blue-600 text-base border border-blue-600 py-2 px-4 rounded"
                 >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM3.0343 7.17241V8.82758L12.9653 8.82758V7.17241L3.0343 7.17241Z"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M3.75 1.5C3.15326 1.5 2.58097 1.73705 2.15901 2.15901C1.73705 2.58097 1.5 3.15326 1.5 3.75V11.25C1.5 11.8467 1.73705 12.419 2.15901 12.841C2.58097 13.2629 3.15326 13.5 3.75 13.5H11.25C11.8467 13.5 12.419 13.2629 12.841 12.841C13.2629 12.419 13.5 11.8467 13.5 11.25V6.75C13.5 6.55109 13.579 6.36032 13.7197 6.21967C13.8603 6.07902 14.0511 6 14.25 6C14.4489 6 14.6397 6.07902 14.7803 6.21967C14.921 6.36032 15 6.55109 15 6.75V11.25C15 12.2446 14.6049 13.1984 13.9017 13.9017C13.1984 14.6049 12.2446 15 11.25 15H3.75C2.75544 15 1.80161 14.6049 1.09835 13.9017C0.395088 13.1984 0 12.2446 0 11.25V3.75C0 2.75544 0.395088 1.80161 1.09835 1.09835C1.80161 0.395088 2.75544 0 3.75 0H8.25C8.44891 0 8.63968 0.0790176 8.78033 0.21967C8.92098 0.360322 9 0.551088 9 0.75C9 0.948912 8.92098 1.13968 8.78033 1.28033C8.63968 1.42098 8.44891 1.5 8.25 1.5H3.75Z"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M11.4118 0.615008C11.8082 0.231555 12.3395 0.0192538 12.891 0.0238777C13.4425 0.0285016 13.9701 0.24968 14.36 0.639726C14.75 1.02977 14.971 1.55744 14.9755 2.10896C14.98 2.66048 14.7676 3.19167 14.384 3.58801L13.7968 4.17601C13.6561 4.31661 13.4654 4.3956 13.2665 4.3956C13.0676 4.3956 12.8769 4.31661 12.7363 4.17601L10.8238 2.26351C10.6832 2.12286 10.6042 1.93213 10.6042 1.73326C10.6042 1.53438 10.6832 1.34365 10.8238 1.20301L11.4118 0.615008ZM9.76327 3.32401C9.62263 3.1834 9.4319 3.10442 9.23302 3.10442C9.03415 3.10442 8.84342 3.1834 8.70277 3.32401L5.35702 6.67051C5.26098 6.76651 5.19281 6.88679 5.15977 7.01851L4.52227 9.56851C4.49095 9.69415 4.49269 9.82575 4.52732 9.95052C4.56195 10.0753 4.62829 10.189 4.71989 10.2805C4.81148 10.372 4.92521 10.4382 5.05001 10.4728C5.1748 10.5073 5.30641 10.5089 5.43202 10.4775L7.98127 9.84001C8.11299 9.80698 8.23327 9.7388 8.32927 9.64276L11.6758 6.29701C11.8164 6.15636 11.8954 5.96563 11.8954 5.76676C11.8954 5.56789 11.8164 5.37715 11.6758 5.23651L9.76327 3.32401Z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="bg-white text-red-600 text-base border border-red-600 py-2 px-4 rounded"
+                  onClick={() =>
+                    setAllDescriptions((prev) =>
+                      prev.filter((_, i) => i !== index)
+                    )
+                  }
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8ZM16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM3.0343 7.17241V8.82758L12.9653 8.82758V7.17241L3.0343 7.17241Z"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
             <div className="bg-[#cccccc] w-full h-0.5" />
             <p className="p-3 !pt-0 text-typeograph-2 text-base xl:text-xl">

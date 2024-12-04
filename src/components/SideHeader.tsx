@@ -43,21 +43,19 @@ export default function SideHeader() {
         className={` flex flex-col gap-4 h-screen overflow-hidden bg-[white] shadow-[5px_0px_8px_0px_rgba(0,0,0,0.05)] transition-all duration-300 z-50 `}
       >
         <div className="flex justify-center items-center mt-4 border-b p-2 pb-4 border-[#00000033]">
-          <Image
-            height={48}
-            width={48}
-            src="/logo.png"
-            alt="Clinic Logo"
-            className="xlg:h-[3rem] h-[2.5rem]"
-          />
+          <Link href="/">
+            <Image
+              height={48}
+              width={48}
+              src="/logo.png"
+              alt="Clinic Logo"
+              className="xlg:h-[3rem] h-[2.5rem]"
+            />
+          </Link>
         </div>
         <div className="flex flex-col xl:gap-4 gap-4 mt-2 p-1 xl:p-2 xlg:px-4 ">
           {sideheader.map((item, index) => (
-            <div
-              key={index}
-              className="relative flex flex-col items-start"
-              //   onClick={() => handleIconClick(index)}
-            >
+            <div key={index} className="relative flex flex-col items-start">
               <div
                 className={`flex items-center rounded-lg w-full hover:bg-[#eee] pr-3 xl:pr-6`}
                 style={{
