@@ -8,6 +8,8 @@ import QuoteForm from "@/features/QuoteForm";
 import WhyChooseUs from "@/features/WhyChooseUs";
 import WebsiteTemplate from "@/template/WebsiteTemplate";
 
+export const dynamic = "force-dynamic";
+
 async function getAllPackages() {
   try {
     const response = await fetch(
@@ -21,7 +23,7 @@ async function getAllPackages() {
 }
 
 export default async function Home() {
-  const packages = await getAllPackages();
+  const { packages } = await getAllPackages();
 
   return (
     <WebsiteTemplate>
@@ -29,7 +31,7 @@ export default async function Home() {
       <QuoteForm />
       <WhyChooseUs />
       <OurServices />
-      {packages && <HomePopularPackages packages={packages.packages} />}
+      <HomePopularPackages packages={packages} />
       {/* <HomeStaticService /> */}
       <Banner />
       <ContactForm />
