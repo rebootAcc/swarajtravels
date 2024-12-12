@@ -58,7 +58,7 @@ export default function QuoteForm() {
     const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
     const whatsappUrl = isDesktop
       ? `https://web.whatsapp.com/send?phone=919339013347&text=${encodedMessage}`
-      : ` https://api.whatsapp.com/send?phone=919339013347&text=${encodedMessage}`;
+      : `https://api.whatsapp.com/send?phone=919339013347&text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
   };
 
@@ -104,7 +104,7 @@ export default function QuoteForm() {
               <option value="sikkim">Sikkim</option>
               <option value="dooars">Dooars</option>
               <option value="kalimpong">Kalimpong</option>
-              <option value="rajastan">Rajastan</option>
+              <option value="rajasthan">Rajasthan</option>
             </select>
             <span className="text-typeograph-2 text-sm md:text-base ps-1 capitalize">
               {location}, India

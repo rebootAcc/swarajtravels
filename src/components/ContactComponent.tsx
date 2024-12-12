@@ -19,7 +19,7 @@ export default function ContactComponent({
     e.preventDefault();
 
     // Construct the WhatsApp message
-    const whatsappMessage = `Name: ${name}\nMobile: ${phone}\nEmail: ${email}\nLocation: ${location}`;
+    const whatsappMessage = `Name: ${name}\nMobile: ${phone}\nEmail: ${email}\nQuery: ${location}`;
 
     // Encode the message
     const encodedMessage = encodeURIComponent(whatsappMessage);
@@ -66,23 +66,20 @@ export default function ContactComponent({
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           >
-            <option value="" className="text-typeograph-2">
+            <option value="Tour Package" className="text-typeograph-2">
               Tour Package
             </option>
-            <option value="darjeeling" className="text-typeograph-2">
-              Darjeeling
+            <option value="Flight Ticket" className="text-typeograph-2">
+              Flight Ticket
             </option>
-            <option value="dooars" className="text-typeograph-2">
-              Dooars
+            <option value="Rail Ticket" className="text-typeograph-2">
+              Rail Ticket
             </option>
-            <option value="kalimpong" className="text-typeograph-2">
-              Kalimpong
+            <option value="Car Rental" className="text-typeograph-2">
+              Car Rental
             </option>
-            <option value="sikkim" className="text-typeograph-2">
-              Sikkim
-            </option>
-            <option value="rajastan " className="text-typeograph-2">
-              Rajastan
+            <option value="Bike Rental" className="text-typeograph-2">
+              Bike Rental
             </option>
           </select>
           <input

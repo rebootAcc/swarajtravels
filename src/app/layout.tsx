@@ -9,9 +9,9 @@ const el_missiri = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Swaraj Travels",
+  title: "Swaraj Travellers",
   description:
-    "Swaraj Travels made by Reboot AI private limited. Here you can find your dream spot travels package in your budget and much more",
+    "Swaraj Travellers made by Reboot AI private limited. Here you can find your dream spot travels package in your budget and much more",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Swaraj Travels",
+    title: "Swaraj Travellers",
     description:
-      "Swaraj Travels made by Reboot AI private limited. Here you can find your dream spot travels package in your budget and much more",
+      "Swaraj Travellers made by Reboot AI private limited. Here you can find your dream spot travels package in your budget and much more",
     type: "website",
     images: [
       {

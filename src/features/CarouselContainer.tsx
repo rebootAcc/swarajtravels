@@ -13,7 +13,7 @@ export default function CarouselContainer() {
     "/slider/carousel-image-9.jpeg",
   ];
   return (
-    <Carousel>
+    <Carousel autoplay={true}>
       {carouselData.map((imgsrc, key) => (
         <div className="overflow-hidden relative" key={key}>
           <Image

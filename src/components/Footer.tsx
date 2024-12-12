@@ -22,8 +22,8 @@ export default function Footer() {
       href: "/services/kailmpong",
     },
     {
-      label: "Rajastan Tour Packages",
-      href: "/services/rajastan",
+      label: "Rajasthan Tour Packages",
+      href: "/services/rajhastan",
     },
     {
       label: "Contact Us",
@@ -85,7 +85,7 @@ export default function Footer() {
           <path d="M5.952 2.073a12.302 12.302 0 1 1 13.67 20.458A12.302 12.302 0 0 1 5.952 2.073Zm13.124 13.344c.123-.297.186-.616.186-.938v-4.354a2.449 2.449 0 0 0-2.45-2.45h-8.05a2.45 2.45 0 0 0-2.45 2.45v4.354a2.45 2.45 0 0 0 2.45 2.45h8.05a2.45 2.45 0 0 0 2.264-1.512Zm-4.583-3.11-3.412 1.979v-3.97l3.412 1.99Z" />
         </svg>
       ),
-      href: "",
+      href: "https://www.youtube.com/@Swaraj_Travellers",
     },
     {
       icon: (
@@ -148,7 +148,8 @@ export default function Footer() {
                     referrerPolicy="no-referrer"
                     className="text-base lg:text-lg font-semibold"
                   >
-                    Dabgram, Siliguri, West Bengal - 731234
+                    B.R.Ambedkar Road, Dabgram, Siliguri, West-Bengal , Pin -
+                    734004.
                   </Link>
                 </div>
                 <div className="inline-flex items-center gap-3 text-white text-base">
@@ -165,10 +166,10 @@ export default function Footer() {
                     />
                   </svg>
                   <Link
-                    href="mailTo:info@swarajtarvel.com"
+                    href="mailTo:admin@swarajtravellers.com"
                     className="text-base lg:text-lg font-semibold"
                   >
-                    info@swarajtarvel.com
+                    admin@swarajtravellers.com
                   </Link>
                 </div>
                 <div className="inline-flex items-center gap-3 text-white text-base">
@@ -270,11 +271,11 @@ export default function Footer() {
             </Link>{" "}
             | All Rights Reserved.{" "}
             {[
-              { label: "Privacy Policy", href: "/" },
-              { label: "Refund Policy", href: "/" },
-              { label: "Terms & Conditions", href: "/" },
+              { label: "Privacy Policy", href: "#" },
+              { label: "Refund Policy", href: "#" },
+              { label: "Terms & Conditions", href: "#" },
             ].map((extra, index) => (
-              <Link href="" key={index}>
+              <Link href={extra.href} key={index}>
                 {extra.label} <span>{"| "}</span>
               </Link>
             ))}
@@ -282,7 +283,7 @@ export default function Footer() {
           <h1 className="text-base text-center">
             Design &amp; Developed By:{" "}
             <Link
-              href="https://rebootwebsite.vercel.app/"
+              href="https://rebootai.in/"
               target="_blank"
               className="font-bold"
             >

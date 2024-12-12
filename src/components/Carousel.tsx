@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 
 export default function Carousel({
   children,
+  autoplay = false,
 }: {
-  children: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
+  autoplay?: boolean;
 }) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
@@ -26,6 +28,9 @@ export default function Carousel({
   const slides = Array.isArray(children) ? children : [children];
 
   useEffect(() => {
+    if (!autoplay) {
+      return;
+    }
     const autoplayInterval = 3000; // Time in milliseconds (3 seconds)
 
     // Start autoplay when component mounts
@@ -43,7 +48,7 @@ export default function Carousel({
         clearInterval(intervalRef.current);
       }
     };
-  }, [slides.length]);
+  }, [slides.length, autoplay]);
 
   return (
     <div className="relative w-full">
