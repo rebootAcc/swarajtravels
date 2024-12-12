@@ -191,7 +191,7 @@ export default function AddNewPackageForm({
             <option value="dooars">Dooars</option>
             <option value="kalimpong">Kalimpong</option>
             <option value="sikkim">Sikkim</option>
-            <option value="rajastan">Rajastan</option>
+            <option value="rajasthan">Rajasthan</option>
           </select>
         </div>
         <div>

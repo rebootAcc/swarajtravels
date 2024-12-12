@@ -62,7 +62,7 @@ export default function OurServices() {
   return (
     <section className="p-4 sm:p-10 xlg:p-20 flex flex-col gap-4 lg:gap-8">
       <h2 className="text-xl sm:text-3xl font-bold text-typeograph-1">
-        Our Services
+        Services We Provided
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 justify-center lg:justify-normal gap-4">
         <Card>

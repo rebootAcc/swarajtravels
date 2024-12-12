@@ -28,7 +28,9 @@ export default function ContactDetails() {
               </svg>
             </div>
             <div className="flex flex-col gap-5">
-              <h2 className="text-primary text-lg sm:text-2xl font-medium">Address:</h2>
+              <h2 className="text-primary text-lg sm:text-2xl font-medium">
+                Address:
+              </h2>
               <Link
                 href="https://maps.app.goo.gl/6RyL4uf6naKPTYyz6"
                 referrerPolicy="no-referrer"
@@ -54,15 +56,35 @@ export default function ContactDetails() {
               </svg>
             </div>
             <div className="flex flex-col gap-5">
-              <h2 className="text-primary text-lg sm:text-2xl font-medium">Phone:</h2>
-              <Link
-                href="tel:+916297661559"
-                referrerPolicy="no-referrer"
-                target="_blank"
-                className="text-typeograph-2 font-medium text-base sm:text-xl"
-              >
-                +91 6297661559
-              </Link>
+              <h2 className="text-primary text-lg sm:text-2xl font-medium">
+                Phone:
+              </h2>
+              <div className="flex flex-wrap gap-1">
+                <Link
+                  href="tel:+916297661559"
+                  referrerPolicy="no-referrer"
+                  target="_blank"
+                  className="text-typeograph-2 font-medium text-base sm:text-xl"
+                >
+                  +91 6297661559
+                </Link>
+                <Link
+                  href="tel:+919339013347"
+                  referrerPolicy="no-referrer"
+                  target="_blank"
+                  className="text-typeograph-2 font-medium text-base sm:text-xl"
+                >
+                  +91 9339013347
+                </Link>
+                <Link
+                  href="tel:+918900143969"
+                  referrerPolicy="no-referrer"
+                  target="_blank"
+                  className="text-typeograph-2 font-medium text-base sm:text-xl"
+                >
+                  +91 8900143969
+                </Link>
+              </div>
             </div>
           </div>
           <div className="flex gap-5 items-start">
@@ -85,9 +107,11 @@ export default function ContactDetails() {
               </svg>
             </div>
             <div className="flex flex-col gap-5">
-              <h2 className="text-primary text-lg sm:text-2xl font-medium">WhatsApp</h2>
+              <h2 className="text-primary text-lg sm:text-2xl font-medium">
+                WhatsApp
+              </h2>
               <Link
-                href="tel:+916297661559"
+                href="https://web.whatsapp.com/send?phone=919339013347"
                 referrerPolicy="no-referrer"
                 target="_blank"
                 className="text-typeograph-2 font-medium text-base sm:text-xl"
@@ -115,7 +139,9 @@ export default function ContactDetails() {
               </svg>
             </div>
             <div className="flex flex-col gap-5">
-              <h2 className="text-primary text-lg sm:text-2xl font-medium">Email:</h2>
+              <h2 className="text-primary text-lg sm:text-2xl font-medium">
+                Email:
+              </h2>
               <div className="flex flex-wrap gap-1">
                 {[
                   "info@swarajtarvellers.com",
