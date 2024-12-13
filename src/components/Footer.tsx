@@ -186,8 +186,9 @@ export default function Footer() {
                     <path d="M14.927 7.7c-.445-2.594-2.745-4.578-5.517-4.578-2.81 0-5.833 2.284-5.591 5.87 2.29-.92 4.015-2.922 4.506-5.36a7.465 7.465 0 0 0 6.602 4.067Z" />
                   </svg>
                   <h3 className="text-base lg:text-lg font-semibold">
-                    <Link href="tel:9339312034">+91 9339312034</Link> /{" "}
-                    <Link href="tel:9330123451">9330123451</Link>
+                    <Link href="tel:+916297661559">+91 6297661559</Link> /{" "}
+                    <Link href="tel:+919339013347">+91 9339013347</Link> /{" "}
+                    <Link href="tel:+918900143969">+91 8900143969</Link>
                   </h3>
                 </div>
               </div>

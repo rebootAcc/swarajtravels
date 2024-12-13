@@ -17,6 +17,7 @@ export default function AddNewPackageForm({
   const [seatImage, setSeatImage] = useState<File | null>(null);
   const [uploadedPicture1, setUploadedPicture1] = useState<File | null>(null);
   const [uploadedPicture2, setUploadedPicture2] = useState<File | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const [allDescriptions, setAllDescriptions] = useState<
     {
@@ -79,6 +80,7 @@ export default function AddNewPackageForm({
       setErrors((prev) => ({ ...prev, description: true }));
       return;
     }
+    setLoading(true);
     try {
       const formdata = new FormData();
       formdata.append("packageCity", city);
@@ -107,6 +109,8 @@ export default function AddNewPackageForm({
       router.push("/dashboard/packages");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -139,6 +143,7 @@ export default function AddNewPackageForm({
       setErrors((prev) => ({ ...prev, description: true }));
       return;
     }
+    setLoading(true);
     try {
       const response = await fetch(`/api/packages/${pId}`, {
         method: "PUT",
@@ -160,6 +165,8 @@ export default function AddNewPackageForm({
       router.push("/dashboard/packages");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -483,7 +490,7 @@ export default function AddNewPackageForm({
           type="submit"
           className="text-secondary border-secondary border rounded py-2 px-10 text-center text-lg hover:text-white hover:bg-secondary transition-colors duration-500 xl:text-2xl font-medium"
         >
-          Submit
+          {loading ? "Wait" : "Submit"}
         </button>
         <button
           type="reset"
