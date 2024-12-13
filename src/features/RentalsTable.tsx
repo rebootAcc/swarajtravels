@@ -40,7 +40,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
       });
       const result = await response.json();
       setAllPAck((prevPackages: any) => {
-        return prevPackages.map((pack: any) => pack._id !== packId);
+        return prevPackages.filter((pack: any) => pack._id !== packId);
       });
     } catch (error) {
       console.error("Error Deleting rental status", error);
@@ -63,7 +63,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
       Action: (
         <div className="flex space-x-2">
           <div className="inline-flex items-center cursor-pointer">
-            <label htmlFor="active" className="cursor-pointer relative">
+            <label htmlFor={item._id} className="cursor-pointer relative">
               <input
                 type="checkbox"
                 value=""
@@ -71,7 +71,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
                 onChange={() =>
                   updateActiveStatus(item._id, !item.rentalActiveStatus)
                 }
-                id="active"
+                id={item._id}
                 className="sr-only peer"
               />
               <div className="relative w-8 h-4 bg-gray-200 rounded-full transition-all peer-checked:bg-green-600"></div>

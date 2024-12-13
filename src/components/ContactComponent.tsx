@@ -14,22 +14,35 @@ export default function ContactComponent({
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [location, setLocation] = useState<string>(currentLocation);
+  const [message, setMessage] = useState<string>("");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Construct the WhatsApp message
-    const whatsappMessage = `Name: ${name}\nMobile: ${phone}\nEmail: ${email}\nQuery: ${location}`;
-
-    // Encode the message
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-
-    // Replace with your actual WhatsApp number, including country code, without "+" or "00"
-    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-    const whatsappUrl = isDesktop
-      ? `https://web.whatsapp.com/send?phone=919339013347&text=${encodedMessage}`
-      : ` https://api.whatsapp.com/send?phone=919339013347&text=${encodedMessage}`;
-    window.open(whatsappUrl, "_blank");
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          leadName: name,
+          leadPhoneNumber: phone,
+          leadEmail: email,
+          leadQuery: location,
+          leadMessage: message,
+        }),
+      });
+      const result = await response.json();
+      console.log(result);
+      if (response.ok) {
+        setName("");
+        setEmail("");
+        setPhone("");
+        setLocation("");
+        setMessage("");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -85,6 +98,8 @@ export default function ContactComponent({
           <input
             type="text"
             placeholder="Message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             className="py-3 lg:py-6 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />
           <button

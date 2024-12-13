@@ -14,13 +14,25 @@ export const metadata: Metadata = {
     "Swaraj Travellers made by Reboot AI private limited. Here you can find your dream spot travels package in your budget and much more",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      {
+        url: "https://www.swarajtravellers.com/favicon.svg",
+        type: "image/svg+xml",
+      },
+      {
+        url: "https://www.swarajtravellers.com/favicon-96x96.png",
+        type: "image/png",
+        sizes: "96x96",
+      },
     ],
-    shortcut: "/favicon.ico",
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: "https://www.swarajtravellers.com/favicon.ico",
+    apple: [
+      {
+        url: "https://www.swarajtravellers.com/apple-touch-icon.png",
+        sizes: "180x180",
+      },
+    ],
   },
-  manifest: "/site.webmanifest",
+  manifest: "https://www.swarajtravellers.com/site.webmanifest",
   openGraph: {
     title: "Swaraj Travellers",
     description:
@@ -28,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/favicon-96x96.png",
+        url: "https://www.swarajtravellers.com/favicon-96x96.png",
         width: 96,
         height: 96,
       },

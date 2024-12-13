@@ -14,6 +14,7 @@ export default function AddNewRentalForm({
   const [seasonPrice, setSeasonPrice] = useState<string>("");
   const [offSeasonPrice, setOffSeasonPrice] = useState<string>("");
   const [uploadedPicture1, setUploadedPicture1] = useState<File | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const [errors, setErrors] = useState<{
     type?: boolean;
@@ -51,6 +52,7 @@ export default function AddNewRentalForm({
       setErrors((prev) => ({ ...prev, offSeasonPrice: true }));
       return;
     }
+    setLoading(true);
     try {
       const formdata = new FormData();
       formdata.append("rentalName", name);
@@ -68,6 +70,8 @@ export default function AddNewRentalForm({
       router.push("/dashboard/rentals/");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,6 +96,7 @@ export default function AddNewRentalForm({
       setErrors((prev) => ({ ...prev, offSeasonPrice: true }));
       return;
     }
+    setLoading(true);
     try {
       const response = await fetch(`/api/packages/${pId}`, {
         method: "PUT",
@@ -107,6 +112,8 @@ export default function AddNewRentalForm({
       router.push("/dashboard/rentals");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -216,7 +223,7 @@ export default function AddNewRentalForm({
           type="submit"
           className="text-secondary border-secondary border rounded py-2 px-10 text-center text-lg hover:text-white hover:bg-secondary transition-colors duration-500 xl:text-2xl font-medium"
         >
-          Submit
+          {loading ? "Wait" : "Submit"}
         </button>
         <button
           type="reset"
