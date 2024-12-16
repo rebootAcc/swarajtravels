@@ -1,52 +1,136 @@
 import { NextRequest, NextResponse } from "next/server";
 import Package from "@/models/Package"; // Update the import path as needed
 import { connectToDataBase } from "@/db/connection"; // Your DB connection helper function
-import { deleteFile } from "@/utils/cloudinary";
+import { deleteFile, uploadFile, UploadFileResult } from "@/utils/cloudinary";
 import mongoose from "mongoose";
 
 // The update function
 export async function PUT(
-  req: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
-    const id = (await params).id; // Get the package ID from the route params
-    const { updatedData } = await req.json(); // Get the request body (parsed as JSON)
-
-    // Connect to the database
     await connectToDataBase();
 
-    // Find the package by ID and update the specified fields
-    const updatedPackage = await Package.findOneAndUpdate(
-      {
-        $or: [
-          { packageId: id },
-          { _id: mongoose.Types.ObjectId.isValid(id) ? id : undefined },
-        ],
-      },
-      {
-        $set: {
-          ...updatedData,
-        },
-      },
-      { new: true } // Return the updated document
-    );
+    const { id } = await params; // Get the package ID from the URL params
+    const body = await request.formData(); // Parse FormData
 
-    if (!updatedPackage) {
+    // Extract non-file fields
+    const packageName = body.get("packageName")?.toString();
+    const packagePrice = body.get("packagePrice")?.toString();
+    const packageDuration = body.get("packageDuration")?.toString();
+    const packageIternary = body.get("packageIternary")?.toString();
+    const packageSeatDetails = body.get("packageSeatDetails");
+    const packageCity = body.get("packageCity")?.toString();
+    const packageDescriptions = JSON.parse(
+      body.getAll("packageDescriptions")?.toString() || "[]"
+    );
+    const packageCover = body.getAll("packageCover");
+    const propulerPackage = body.get("propulerPackage")?.toString();
+
+    // Validate required fields
+    if (
+      !packageName ||
+      !packagePrice ||
+      !packageDuration ||
+      !packageDescriptions ||
+      !packageCity
+    ) {
+      return NextResponse.json(
+        { message: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    // Fetch the existing package by packageId (not _id)
+    const existingPackage = await Package.findOne({ packageId: id });
+    if (!existingPackage) {
       return NextResponse.json(
         { message: "Package not found" },
         { status: 404 }
       );
     }
 
-    // Return the updated package details
+    // Prepare the updated package data
+    const updatedPackageData: any = {};
+
+    // Update the non-file fields if provided
+    if (packageName) updatedPackageData.packageName = packageName;
+    if (packagePrice) updatedPackageData.packagePrice = packagePrice;
+    if (packageDuration) updatedPackageData.packageDuration = packageDuration;
+    if (packageIternary) updatedPackageData.packageIternary = packageIternary;
+    if (packageCity) updatedPackageData.packageCity = packageCity;
+    if (packageDescriptions)
+      updatedPackageData.packageDescriptions = packageDescriptions;
+
+    if (propulerPackage !== undefined) {
+      const currentPopularPackageValue = existingPackage.propulerPackage;
+      updatedPackageData.propulerPackage = currentPopularPackageValue
+        ? false
+        : true;
+    }
+
+    // Handle packageCover updates (file upload)
+    const uploadedCovers = [];
+    for (const cover of packageCover) {
+      if (cover instanceof File) {
+        const fileBuffer = await cover.arrayBuffer();
+        const mimeType = cover.type;
+        const encoding = "base64";
+        const base64Data = Buffer.from(fileBuffer).toString("base64");
+
+        const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
+        const result: UploadFileResult | any = await uploadFile(fileUri);
+
+        if (result.public_id) {
+          uploadedCovers.push({
+            path: result.secure_url,
+            publicId: result.public_id,
+          });
+        }
+      }
+    }
+    if (uploadedCovers.length > 0) {
+      updatedPackageData.packageCover = uploadedCovers;
+    }
+
+    // Handle packageSeatDetails update (file upload)
+    let uploadedPackageSeatDetails = null;
+    if (packageSeatDetails instanceof File) {
+      const fileBuffer = await packageSeatDetails.arrayBuffer();
+      const mimeType = packageSeatDetails.type;
+      const encoding = "base64";
+      const base64Data = Buffer.from(fileBuffer).toString("base64");
+
+      const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
+      const result: UploadFileResult | any = await uploadFile(fileUri);
+
+      if (result.public_id) {
+        uploadedPackageSeatDetails = {
+          path: result.secure_url,
+          publicId: result.public_id,
+        };
+      }
+    }
+    if (uploadedPackageSeatDetails) {
+      updatedPackageData.packageSeatDetails = uploadedPackageSeatDetails;
+    }
+
+    // Update the existing package with the new data
+    const updatedPackage = await Package.findOneAndUpdate(
+      { packageId: id }, // Update by packageId, not _id
+      { $set: updatedPackageData },
+      { new: true } // Return the updated document
+    );
+
+    // Return the updated package
     return NextResponse.json(updatedPackage, { status: 200 });
   } catch (error: unknown) {
-    console.error("Error deleting user:", error);
+    console.error("Error updating package:", error);
     if (error instanceof Error) {
       return NextResponse.json(
         {
-          message: "An error occurred while deleting the user",
+          message: "An error occurred while updating the package",
           error: error.message,
         },
         { status: 500 }
@@ -59,7 +143,6 @@ export async function PUT(
     }
   }
 }
-
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }

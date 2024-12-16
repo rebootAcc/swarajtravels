@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 async function getAllPackages() {
   try {
     const response = await fetch(
-      `${process.env.API_URI}/api/packages?packageActiveStatus=true&limit=6`
+      `${process.env.API_URI}/api/packages?packageActiveStatus=true&limit=6&propulerPackage=true`
     );
     const data = await response.json();
     return data;

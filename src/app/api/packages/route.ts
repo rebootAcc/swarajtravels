@@ -19,8 +19,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const packageCity = body.get("packageCity")?.toString();
     const packageDescriptions = JSON.parse(
       body.getAll("packageDescriptions")?.toString() || "[]"
-    ); // Parse the package descriptions
-    const packageCover = body.getAll("packageCover"); // Get all files for packageCover
+    );
+    const packageCover = body.getAll("packageCover");
+    const propulerPackage = body.get("propulerPackage") === "true";
 
     // Validate required fields
     if (
@@ -29,8 +30,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       !packageDuration ||
       !packageDescriptions ||
       !packageCity ||
-      !packageCover.length ||
-      !packageSeatDetails
+      !packageCover.length
     ) {
       return NextResponse.json(
         { message: "All fields are required" },
@@ -64,21 +64,21 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }
     }
 
-    let uploadedPackageSeatDetails = { path: "", publicId: "" };
+    let uploadedPackageSeatDetails = null;
     if (packageSeatDetails instanceof File) {
       const fileBuffer = await packageSeatDetails.arrayBuffer();
-
       const mimeType = packageSeatDetails.type;
       const encoding = "base64";
       const base64Data = Buffer.from(fileBuffer).toString("base64");
 
-      // this will be used to upload the file
       const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
+      const result: UploadFileResult | any = await uploadFile(fileUri);
 
-      const result: UploadFileResult | any = await uploadFile(fileUri); // Pass the file and its MIME type to uploadFile
       if (result.public_id) {
-        uploadedPackageSeatDetails.path = result.secure_url;
-        uploadedPackageSeatDetails.publicId = result.public_id;
+        uploadedPackageSeatDetails = {
+          path: result.secure_url,
+          publicId: result.public_id,
+        };
       }
     }
 
@@ -91,9 +91,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       packageIternary,
       packageSeatDetails: uploadedPackageSeatDetails,
       packageCity,
-      packageActiveStatus: true, // Default to true if not provided
+      packageActiveStatus: true,
+      propulerPackage,
       packageDescriptions,
-      packageCover: uploadedCovers, // Save the uploaded cover details
+      packageCover: uploadedCovers,
     });
 
     // Save the package to the database
@@ -129,6 +130,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const packagePrice = url.searchParams.get("packagePrice");
     const packageActiveStatus = url.searchParams.get("packageActiveStatus");
     const packageCity = url.searchParams.get("packageCity");
+    const propulerPackage = url.searchParams.get("propulerPackage");
     const page = parseInt(url.searchParams.get("page") || "1", 10);
     const limit = parseInt(url.searchParams.get("limit") || "10", 10);
 
@@ -147,6 +149,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (packageCity) {
       filters.packageCity = { $regex: packageCity, $options: "i" }; // Case-insensitive search
+    }
+
+    if (propulerPackage !== null) {
+      filters.propulerPackage = propulerPackage === "true";
     }
 
     // Set up pagination

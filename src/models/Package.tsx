@@ -28,6 +28,7 @@ interface PackageDocument extends Document {
   packageCity?: string;
   packageDescriptions: PackageDescription[];
   packageCover: PackageCover[];
+  propulerPackage: Boolean;
 }
 
 // Create the schema based on the PackageDocument interface
@@ -60,11 +61,10 @@ const packageSchema = new Schema<PackageDocument>(
     },
     packageSeatDetails: {
       type: {
-        path: { type: String, required: true },
-        publicId: { type: String, required: true },
+        path: { type: String, required: false },
+        publicId: { type: String, required: false },
       },
-
-      required: true,
+      default: null,
     },
     packageCity: {
       type: String,
@@ -79,6 +79,7 @@ const packageSchema = new Schema<PackageDocument>(
       ],
       required: true,
     },
+    propulerPackage: { type: Boolean, default: false },
     packageCover: {
       type: [
         {
