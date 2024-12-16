@@ -36,26 +36,34 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
       console.error("Error updating package status", error);
     }
   };
-  
-  const deletePackage = async (packId: string) => {
-    try {
-      const response = await fetch(`/api/rentals/${packId}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      const result = await response.json();
-      setAllPAck((prevPackages: any) => {
-        return prevPackages.filter((pack: any) => pack._id !== packId);
-      });
-    } catch (error) {
-      console.error("Error Deleting rental status", error);
+
+  const deletePackage = async (packId: string, rentalName: string) => {
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete rental: ${rentalName}?`
+    );
+
+    if (isConfirmed) {
+      try {
+        console.log("Deleting rental with ID:", packId);
+        const response = await fetch(`/api/rentals/${packId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+        const result = await response.json();
+        console.log("Deletion result:", result);
+        setAllPAck((prevPackages: any) => {
+          return prevPackages.filter((pack: any) => pack.rentalId !== packId);
+        });
+      } catch (error) {
+        console.error("Error Deleting rental status", error);
+      }
     }
   };
 
   const openViewPackage = (rentId: string) => {
     const packageToView = allPack.find((item: any) => item.rentalId === rentId);
-    setViewRental(packageToView); // Set the selected package data
-    setIsViewOpen(true); // Open the slide-in component
+    setViewRental(packageToView);
+    setIsViewOpen(true);
   };
 
   const customizeTableData = {
@@ -116,7 +124,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
           </Link>
           <button
             type="button"
-            onClick={() => deletePackage(item._id)}
+            onClick={() => deletePackage(item.rentalId, item.rentalName)}
             className="text-red-600 text-base rounded-full p-2"
           >
             <svg

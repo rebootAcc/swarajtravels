@@ -32,7 +32,7 @@ export default function GeneralForm() {
         setName("");
         setEmail("");
         setPhone("");
-        setLocation("");
+        setLocation("tour_package");
         setMessage("");
       }
     } catch (error) {

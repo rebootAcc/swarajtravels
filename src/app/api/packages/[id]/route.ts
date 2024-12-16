@@ -28,21 +28,6 @@ export async function PUT(
     const packageCover = body.getAll("packageCover");
     const propulerPackage = body.get("propulerPackage")?.toString();
 
-    // Validate required fields
-    if (
-      !packageName ||
-      !packagePrice ||
-      !packageDuration ||
-      !packageDescriptions ||
-      !packageCity
-    ) {
-      return NextResponse.json(
-        { message: "All fields are required" },
-        { status: 400 }
-      );
-    }
-
-    // Fetch the existing package by packageId (not _id)
     const existingPackage = await Package.findOne({ packageId: id });
     if (!existingPackage) {
       return NextResponse.json(
@@ -51,10 +36,8 @@ export async function PUT(
       );
     }
 
-    // Prepare the updated package data
     const updatedPackageData: any = {};
 
-    // Update the non-file fields if provided
     if (packageName) updatedPackageData.packageName = packageName;
     if (packagePrice) updatedPackageData.packagePrice = packagePrice;
     if (packageDuration) updatedPackageData.packageDuration = packageDuration;
@@ -70,7 +53,6 @@ export async function PUT(
         : true;
     }
 
-    // Handle packageCover updates (file upload)
     const uploadedCovers = [];
     for (const cover of packageCover) {
       if (cover instanceof File) {
@@ -94,7 +76,6 @@ export async function PUT(
       updatedPackageData.packageCover = uploadedCovers;
     }
 
-    // Handle packageSeatDetails update (file upload)
     let uploadedPackageSeatDetails = null;
     if (packageSeatDetails instanceof File) {
       const fileBuffer = await packageSeatDetails.arrayBuffer();
@@ -116,14 +97,12 @@ export async function PUT(
       updatedPackageData.packageSeatDetails = uploadedPackageSeatDetails;
     }
 
-    // Update the existing package with the new data
     const updatedPackage = await Package.findOneAndUpdate(
-      { packageId: id }, // Update by packageId, not _id
+      { packageId: id },
       { $set: updatedPackageData },
-      { new: true } // Return the updated document
+      { new: true }
     );
 
-    // Return the updated package
     return NextResponse.json(updatedPackage, { status: 200 });
   } catch (error: unknown) {
     console.error("Error updating package:", error);
@@ -143,6 +122,55 @@ export async function PUT(
     }
   }
 }
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
+  try {
+    await connectToDataBase();
+
+    const { id } = await params; // Get the package ID from the URL params
+    const body = await request.json(); // Parse the request body
+
+    const { packageActiveStatus } = body; // Extract the active status value from the request body
+
+    // Check if the package exists
+    const existingPackage = await Package.findOne({ packageId: id });
+    if (!existingPackage) {
+      return NextResponse.json(
+        { message: "Package not found" },
+        { status: 404 }
+      );
+    }
+
+    // Update the package active status
+    const updatedPackage = await Package.findOneAndUpdate(
+      { packageId: id },
+      { $set: { packageActiveStatus } },
+      { new: true } // Return the updated package document
+    );
+
+    return NextResponse.json(updatedPackage, { status: 200 });
+  } catch (error: unknown) {
+    console.error("Error updating package active status:", error);
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          message: "An error occurred while updating the package active status",
+          error: error.message,
+        },
+        { status: 500 }
+      );
+    } else {
+      return NextResponse.json(
+        { message: "An unexpected error occurred" },
+        { status: 500 }
+      );
+    }
+  }
+}
+
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -155,10 +183,7 @@ export async function DELETE(
 
     // Find the package to delete
     const packageToDelete = await Package.findOne({
-      $or: [
-        { packageId: id },
-        { _id: mongoose.Types.ObjectId.isValid(id) ? id : undefined },
-      ],
+      packageId: id,
     });
 
     if (!packageToDelete) {
@@ -206,7 +231,7 @@ export async function DELETE(
         );
       }
     }
-    await Package.deleteOne({ id: packageToDelete._id });
+    await Package.deleteOne({ packageId: id });
     // Return success message
     return NextResponse.json(
       { message: "Package and associated files deleted successfully" },

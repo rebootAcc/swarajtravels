@@ -69,12 +69,7 @@ export async function DELETE(
     await connectToDataBase();
 
     // Find the package to delete
-    const leadToDelete = await Lead.findOne({
-      $or: [
-        { leadId: id },
-        { _id: mongoose.Types.ObjectId.isValid(id) ? id : undefined },
-      ],
-    });
+    const leadToDelete = await Lead.findOne({ leadId: id });
 
     if (!leadToDelete) {
       return NextResponse.json(
@@ -83,7 +78,7 @@ export async function DELETE(
       );
     }
 
-    await Lead.deleteOne({ id: leadToDelete._id });
+    await Lead.deleteOne({ leadId: id });
     // Return success message
     return NextResponse.json(
       { message: "Lead and associated files deleted successfully" },
@@ -144,4 +139,3 @@ export async function GET(
     }
   }
 }
-

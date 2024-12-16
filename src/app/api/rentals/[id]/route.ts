@@ -64,17 +64,14 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
-    const id = (await params).id; // Get the package ID from the route params
+    const id = (await params).id;
 
     // Connect to the database
     await connectToDataBase();
 
     // Find the package to delete
     const rentalToDelete = await Rental.findOne({
-      $or: [
-        { rentalId: id },
-        { _id: mongoose.Types.ObjectId.isValid(id) ? id : undefined },
-      ],
+      rentalId: id,
     });
 
     if (!rentalToDelete) {
@@ -84,12 +81,10 @@ export async function DELETE(
       );
     }
 
-    // If the package has associated packageCover files, delete them from Cloudinary
     if (rentalToDelete.rentalCover && rentalToDelete.rentalCover.length > 0) {
-      // Loop through each file in the packageCover array and delete them from Cloudinary
       for (const file of rentalToDelete.rentalCover) {
         const { publicId }: { publicId: string } = file;
-        const result: any = await deleteFile(publicId); // Call deleteFile utility
+        const result: any = await deleteFile(publicId);
         if (result.error) {
           console.error(
             "Error deleting file from Cloudinary:",
@@ -102,8 +97,8 @@ export async function DELETE(
         }
       }
     }
-    await Rental.deleteOne({ id: rentalToDelete._id });
-    // Return success message
+    await Rental.deleteOne({ rentalId: id });
+
     return NextResponse.json(
       { message: "Rental and associated files deleted successfully" },
       { status: 200 }
