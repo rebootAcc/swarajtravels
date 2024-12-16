@@ -14,8 +14,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       leadQuery,
       leadMessage,
       leadPackage,
-      startDate,
-      endDate,
+      depertureDate,
       startPoint,
       endPoint,
     } = await request.json();
@@ -40,8 +39,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       leadMessage,
       leadQuery,
       leadPackage,
-      startDate,
-      endDate,
+      depertureDate,
       startPoint,
       endPoint,
     });

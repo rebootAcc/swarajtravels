@@ -47,7 +47,15 @@ export default async function LeadType({
         </DashBoardTopHeader>
       </div>
       <div className="xlg:px-8 px-4 py-4 flex flex-col gap-2">
-        <LeadsTable tableData={pageData} leadType={type} />
+        {pageData && pageData.leads ? (
+          <LeadsTable
+            key={`${type}-${pageData.pagination.currentPage}-${pageData.leads.length}`}
+            tableData={pageData}
+            leadType={type}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
         <div className="flex justify-between py-4 text-typeograph-1 text-sm lg:text-base">
           <span>
             Showing {pageData.leads.length} of {pageData.pagination.totalLeads}{" "}

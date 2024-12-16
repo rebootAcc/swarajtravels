@@ -52,14 +52,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       { label: "Package", value: "leadPackage" },
       { label: "Message", value: (row: any) => row.leadMessage || "N/A" },
       {
-        label: "Start Date",
+        label: "Deperture Data",
         value: (row: any) =>
-          row.startDate ? format(new Date(row.startDate), "dd/MM/yyyy") : "N/A",
-      },
-      {
-        label: "End Date",
-        value: (row: any) =>
-          row.endDate ? format(new Date(row.endDate), "dd/MM/yyyy") : "N/A",
+          row.depertureDate
+            ? format(new Date(row.depertureDate), "dd/MM/yyyy")
+            : "N/A",
       },
       { label: "Start Point", value: (row: any) => row.startPoint || "N/A" },
       { label: "End Point", value: (row: any) => row.endPoint || "N/A" },
@@ -67,11 +64,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         label: "Created At",
         value: (row: any) =>
           format(new Date(row.createdAt), "dd/MM/yyyy HH:mm"),
-      },
-      {
-        label: "Updated At",
-        value: (row: any) =>
-          format(new Date(row.updatedAt), "dd/MM/yyyy HH:mm"),
       },
     ];
 

@@ -143,7 +143,7 @@ export default function ContactDetails() {
                 Email:
               </h2>
               <div className="flex flex-wrap gap-1">
-                {["swarajtarvellers@gmail.com"].map((mail, index) => (
+                {["swarajtravellers@gmail.com"].map((mail, index) => (
                   <Link
                     href={`mailto:${mail}`}
                     referrerPolicy="no-referrer"

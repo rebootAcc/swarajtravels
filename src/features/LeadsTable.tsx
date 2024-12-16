@@ -203,8 +203,9 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "StartDate",
-          "EndDate",
+          "DepertureDate",
+          "StartPoint",
+          "EndPoint",
           "Action",
         ],
         tableBody: allLeads.map((item: any) => ({
@@ -214,8 +215,9 @@ export default function LeadsTable({
           Name: item.leadName,
           Number: item.leadPhoneNumber,
           Email: item.leadEmail,
-          StartDate: extractDateTime(item.startDate).date,
-          EndDate: extractDateTime(item.endDate).date,
+          DepertureDate: extractDateTime(item.depertureDate).date,
+          StartPoint: item.startPoint,
+          EndPoint: item.endPoint,
           Action: (
             <div className="flex space-x-2 items-center" key={item.leadId}>
               <div className="inline-flex items-center cursor-pointer">
@@ -250,8 +252,9 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "StartDate",
-          "EndDate",
+          "DepertureDate",
+          "StartPoint",
+          "EndPoint",
           "Action",
         ],
         tableBody: allLeads.map((item: any) => ({
@@ -261,8 +264,9 @@ export default function LeadsTable({
           Name: item.leadName,
           Number: item.leadPhoneNumber,
           Email: item.leadEmail,
-          StartDate: extractDateTime(item.startDate).date,
-          EndDate: extractDateTime(item.endDate).date,
+          DepertureDate: extractDateTime(item.depertureDate).date,
+          StartPoint: item.startPoint,
+          EndPoint: item.endPoint,
           Action: (
             <div className="flex space-x-2 items-center" key={item.leadId}>
               <div className="inline-flex items-center cursor-pointer">
