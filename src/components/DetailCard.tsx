@@ -12,13 +12,15 @@ export default function DetailCard({
   return (
     <div className="bg-[#f5f5f5] rounded p-10 flex flex-col gap-3 items-center">
       <div>
-        <Image
-          src={icon}
-          alt="card icon"
-          width={70}
-          height={70}
-          className="w-[4.85vmax]"
-        />
+        {!!icon && (
+          <Image
+            src={icon}
+            alt="card icon"
+            width={70}
+            height={70}
+            className="w-[4.85vmax]"
+          />
+        )}
       </div>
       <div className="flex flex-col gap-3 items-center">
         {title !== "" && (

@@ -6,9 +6,11 @@ import { motion } from "framer-motion";
 export default function Carousel({
   children,
   autoplay = false,
+  pagination = true,
 }: {
   children?: ReactNode | ReactNode[];
   autoplay?: boolean;
+  pagination?: boolean;
 }) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
@@ -87,19 +89,21 @@ export default function Carousel({
       </div>
 
       {/* Navigation Dots */}
-      <div className="absolute z-50 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        {slides.length > 0 &&
-          slides.map((_, count) => (
-            <button
-              type="button"
-              className={`w-6 lg:w-8 h-1 lg:h-2 rounded-full ${
-                currentIndex === count ? "bg-primary" : "bg-white"
-              }`}
-              key={count}
-              onClick={() => handleNavigation(count)}
-            />
-          ))}
-      </div>
+      {pagination && (
+        <div className="absolute z-50 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+          {slides.length > 0 &&
+            slides.map((_, count) => (
+              <button
+                type="button"
+                className={`w-6 lg:w-8 h-1 lg:h-2 rounded-full ${
+                  currentIndex === count ? "bg-primary" : "bg-white"
+                }`}
+                key={count}
+                onClick={() => handleNavigation(count)}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 }

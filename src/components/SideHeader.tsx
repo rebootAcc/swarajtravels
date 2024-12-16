@@ -1,7 +1,13 @@
+"use client";
+import useClickOutSide from "@/hooks/useClickOutSide";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function SideHeader() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [allLeadsType, setAllLeadsType] = useState<string[]>([]);
+  const dropDownRef = useClickOutSide(() => setIsOpen(false));
   const sideheader = [
     {
       icon: (
@@ -49,14 +55,31 @@ export default function SideHeader() {
         </svg>
       ),
       name: "Lead Request",
-      link: "/dashboard/leads",
+      leadType: allLeadsType.map((type) => ({
+        label: type.split("_").join(" "),
+        href: `/dashboard/leads/${type}?page=1`,
+      })),
     },
   ];
+
+  async function getAllLeadsType() {
+    try {
+      const response = await fetch("/api/leads/types");
+      const results = await response.json();
+      setAllLeadsType(results);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getAllLeadsType();
+  }, []);
 
   return (
     <aside>
       <div
-        className={` flex flex-col gap-4 h-screen overflow-hidden bg-[white] shadow-[5px_0px_8px_0px_rgba(0,0,0,0.05)] transition-all duration-300 z-50 `}
+        className={`flex flex-col gap-4 h-screen overflow-hidden bg-[white] shadow-[5px_0px_8px_0px_rgba(0,0,0,0.05)] transition-all duration-300 z-50 `}
       >
         <div className="flex justify-center items-center mt-4 border-b p-2 pb-4 border-[#00000033]">
           <Link href="/">
@@ -71,7 +94,11 @@ export default function SideHeader() {
         </div>
         <div className="flex flex-col xl:gap-4 gap-4 mt-2 p-1 xl:p-2 xlg:px-4 ">
           {sideheader.map((item, index) => (
-            <div key={index} className="relative flex flex-col items-start">
+            <div
+              key={index}
+              className="relative flex flex-col items-start"
+              ref={dropDownRef}
+            >
               <div
                 className={`flex items-center rounded-lg w-full hover:bg-[#eee] pr-3 xl:pr-6`}
                 style={{
@@ -93,11 +120,36 @@ export default function SideHeader() {
                 ) : (
                   <span
                     className={`xlg:text-base xxl:text-xl xl:text-sm text-xs font-semibold cursor-pointer hover:text-primary text-typeograph-1 ml-2`}
+                    onClick={() => setIsOpen(!isOpen)}
                   >
                     {item.name}
                   </span>
                 )}
               </div>
+              {item.leadType && (
+                <div
+                  className={`flex flex-col w-full ml-4 overflow-hidden ease-in-out transition duration-300`}
+                  style={
+                    isOpen
+                      ? { opacity: 1, visibility: "visible" }
+                      : { opacity: 0, visibility: "hidden" }
+                  }
+                >
+                  {item.leadType.map((link, linkIndex) => (
+                    <Link
+                      href={link.href}
+                      key={linkIndex}
+                      style={{
+                        transition:
+                          "background-color 0.5s ease, width 0.5s ease",
+                      }}
+                      className={`pl-10 py-2 transition-all duration-1000 ease-in-out hover:bg-[#eee] rounded-lg xlg:text-base xxl:text-xl xl:text-sm text-xs font-semibold cursor-pointer hover:text-primary text-typeograph-1 capitalize`} // Close sidebar on link click
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
