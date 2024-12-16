@@ -85,15 +85,10 @@ export default function ViewLeadDetails({
         <p>
           <strong>End Point:</strong> {leadData.endPoint || ""}
         </p>
-        {leadData.startDate && (
+        {leadData.depertureDate && (
           <p>
-            <strong>From :</strong>{" "}
-            {`${extractDateTime(leadData.startDate).date}`}
-          </p>
-        )}
-        {leadData.endDate && (
-          <p>
-            <strong>To :</strong> {`${extractDateTime(leadData.endDate).date}`}
+            <strong>Deperture Date :</strong>{" "}
+            {`${extractDateTime(leadData.depertureDate).date}`}
           </p>
         )}
       </div>

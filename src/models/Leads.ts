@@ -9,8 +9,7 @@ interface LeadsDocument extends Document {
   leadType: string;
   leadPackage?: string;
   leadMessage?: string;
-  startDate?: Date;
-  endDate?: Date;
+  depertureDate?: Date;
   startPoint?: string;
   endPoint?: string;
   leadStatus: string; // "Pending", "Processing", "Completed", "Cancelled"
@@ -26,8 +25,7 @@ const leadSchema = new Schema<LeadsDocument>(
     leadQuery: { type: String, required: true },
     leadPackage: { type: String },
     leadMessage: { type: String },
-    startDate: { type: Date },
-    endDate: { type: Date },
+    depertureDate: { type: Date },
     startPoint: { type: String },
     endPoint: { type: String },
     leadStatus: { type: String, default: "Pending", required: true },

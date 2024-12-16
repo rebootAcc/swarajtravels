@@ -3,14 +3,10 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker } from "react-date-range";
 import { format } from "date-fns";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-export default function LeadsDateFilter({
-  leadType,
-}: {
-  leadType: string;
-}) {
-  const [tempDateRange, setTempDateRange] = useState({
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+export default function LeadsDateFilter({ leadType }: { leadType: string }) {
+  const [tempDateRange, setTempDateRange] = useState<any>({
     startDate: null,
     endDate: null,
   });
@@ -18,6 +14,12 @@ export default function LeadsDateFilter({
   const [dateFilterApplied, setDateFilterApplied] = useState(false);
 
   const router = useRouter();
+
+  const searchParam = useSearchParams();
+
+  const startDate = searchParam.get("startDate");
+
+  const endDate = searchParam.get("endDate");
 
   const handleDateSelection = (ranges: any) => {
     const { startDate, endDate } = ranges.selection;
@@ -41,6 +43,17 @@ export default function LeadsDateFilter({
       `/dashboard/leads/${leadType}?startDate=${formattedStartDate}&endDate=${formattedEndDate}&page=${1}`
     );
   };
+
+  useEffect(() => {
+    if (!startDate && !endDate) {
+      return;
+    }
+
+    setTempDateRange({
+      startDate,
+      endDate,
+    });
+  }, [startDate, endDate]);
 
   const handleClearDateFilter = () => {
     setTempDateRange({ startDate: null, endDate: null });

@@ -275,7 +275,7 @@ export default function AddNewPackageForm({
               setDuration(e.target.value);
               if (parseInt(e.target.value) > 1) {
                 setIternary(
-                  `${parseInt(e.target.value, 10) - 1} Nigths | ${parseInt(
+                  `${parseInt(e.target.value, 10) - 1} Nights | ${parseInt(
                     e.target.value
                   )} Days`
                 );

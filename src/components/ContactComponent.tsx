@@ -17,7 +17,6 @@ export default function ContactComponent({
   const [location, setLocation] = useState<string>(queryFor);
   const [message, setMessage] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
   const [startPoint, setStartPoint] = useState<string>("");
   const [endPoint, setEndPoint] = useState<string>("");
   const [packageLocation, setPackageLocation] =
@@ -35,8 +34,9 @@ export default function ContactComponent({
         leadType: location,
         leadQuery: location,
         leadMessage: message,
-        startDate: startDate,
-        endDate: endDate,
+        depertureDate: startDate,
+        startPoint,
+        endPoint,
       };
     } else if (location === "rail_booking") {
       body = {
@@ -45,8 +45,9 @@ export default function ContactComponent({
         leadType: location,
         leadQuery: location,
         leadMessage: message,
-        startDate: startDate,
-        endDate: endDate,
+        depertureDate: startDate,
+        startPoint,
+        endPoint,
       };
     } else if (location === "tour_package") {
       body = {
@@ -64,6 +65,7 @@ export default function ContactComponent({
         leadType: location,
         leadQuery: location,
         leadMessage: message,
+        depertureDate: startDate,
         startPoint,
         endPoint,
       };
@@ -74,6 +76,7 @@ export default function ContactComponent({
         leadType: location,
         leadQuery: location,
         leadMessage: message,
+        depertureDate: startDate,
         startPoint,
         endPoint,
       };
@@ -95,8 +98,9 @@ export default function ContactComponent({
         setLocation(queryFor);
         setMessage("");
         setStartDate("");
-        setEndDate("");
         setPackageLocation("");
+        setStartPoint("");
+        setEndPoint("");
       }
     } catch (error) {
       console.error(error);
@@ -128,27 +132,6 @@ export default function ContactComponent({
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />
           <div className="flex gap-2">
-            <select
-              className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded text-[#aaa] flex-1"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            >
-              <option value="tour_package" className="text-typeograph-2">
-                Tour Package
-              </option>
-              <option value="flight_booking" className="text-typeograph-2">
-                Flight Ticket
-              </option>
-              <option value="rail_booking" className="text-typeograph-2">
-                Rail Ticket
-              </option>
-              <option value="car_rental" className="text-typeograph-2">
-                Car Rental
-              </option>
-              <option value="bike_rental" className="text-typeograph-2">
-                Bike Rental
-              </option>
-            </select>
             {location === "tour_package" && (
               <select
                 className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded text-[#aaa] flex-1"
@@ -176,7 +159,7 @@ export default function ContactComponent({
               </select>
             )}
           </div>
-          {(location === "flight_booking" || location === "rail_booking") && (
+          {location !== "tour_package" && (
             <div className="flex gap-2">
               <input
                 type="date"
@@ -185,26 +168,28 @@ export default function ContactComponent({
                 onChange={(e) => setStartDate(e.target.value)}
                 className="py-3 lg:py-5 px-4 lg:px-6 outline-none border border-dashed border-primary rounded flex-1"
               />
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="py-3 lg:py-5 px-4 lg:px-6 outline-none border border-dashed border-primary rounded flex-1"
-              />
             </div>
           )}
-          {(location === "car_rental" || location === "bike_rental") && (
+          {location !== "tour_package" && (
             <div className="flex gap-2 flex-wrap">
               <input
                 type="text"
-                placeholder="Start Point"
+                placeholder={
+                  location === "flight_booking" || location === "rail_booking"
+                    ? "From"
+                    : "Start Point"
+                }
                 value={startPoint}
                 onChange={(e) => setStartPoint(e.target.value)}
                 className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded flex-1"
               />
               <input
                 type="text"
-                placeholder="Drop Point"
+                placeholder={
+                  location === "flight_booking" || location === "rail_booking"
+                    ? "To"
+                    : "Drop Point"
+                }
                 value={endPoint}
                 onChange={(e) => setEndPoint(e.target.value)}
                 className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded flex-1"
