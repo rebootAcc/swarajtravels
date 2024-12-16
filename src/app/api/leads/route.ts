@@ -6,15 +6,27 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     await connectToDataBase();
-    const { leadName, leadEmail, leadPhoneNumber, leadQuery, leadMessage } =
-      await request.json();
+    const {
+      leadName,
+      leadEmail,
+      leadPhoneNumber,
+      leadType,
+      leadQuery,
+      leadMessage,
+      leadPackage,
+      startDate,
+      endDate,
+      startPoint,
+      endPoint,
+    } = await request.json();
     // Check if all fields are provided
     if (
       !leadName ||
       !leadEmail ||
       !leadPhoneNumber ||
       !leadQuery ||
-      !leadMessage
+      !leadMessage ||
+      !leadType
     ) {
       return NextResponse.json(
         { message: "All fields are required" },
@@ -31,7 +43,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       leadName,
       leadEmail,
       leadPhoneNumber,
+      leadType,
       leadQuery,
+      leadPackage,
+      startDate,
+      endDate,
+      startPoint,
+      endPoint,
     });
 
     // Save the new user to the database
@@ -49,14 +67,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     await connectToDataBase();
     const url = new URL(request.url);
-    const leadQuery = url.searchParams.get("leadQuery");
+    const leadType = url.searchParams.get("leadType");
     const leadStatus = url.searchParams.get("leadStatus");
     const page = parseInt(url.searchParams.get("page") || "1", 10);
     const limit = parseInt(url.searchParams.get("limit") || "10", 10);
-    const query: { leadQuery?: string; leadStatus?: string } = {};
+    const query: { leadType?: string; leadStatus?: string } = {};
 
-    if (leadQuery) {
-      query.leadQuery = leadQuery;
+    if (leadType) {
+      query.leadType = leadType;
     }
 
     if (leadStatus) {

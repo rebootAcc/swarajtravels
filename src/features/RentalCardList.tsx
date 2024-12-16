@@ -7,6 +7,8 @@ import { useState } from "react";
 
 export default function RentalCardList({ rentals }: { rentals: any }) {
   const [contactForm, setContactForm] = useState<boolean>(false);
+  const [queryFor, setQueryFor] = useState<string>("");
+
   const contactBoxRef = useClickOutSide(() => setContactForm(false));
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 justify-center lg:justify-normal gap-4">
@@ -28,7 +30,7 @@ export default function RentalCardList({ rentals }: { rentals: any }) {
               </h2>
               <div className="justify-between flex">
                 <p className="text-typeograph-2 text-sm lg:text-lg">
-                  Season Price
+                  Season Price / day
                 </p>
                 <p className="text-typeograph-2 text-sm lg:text-lg">
                   ₹ {service.rentalSeasonPrice}
@@ -36,7 +38,7 @@ export default function RentalCardList({ rentals }: { rentals: any }) {
               </div>
               <div className="justify-between flex">
                 <p className="text-typeograph-2 text-sm lg:text-lg">
-                  Off. Season Price
+                  Off. Season Price / day
                 </p>
                 <p className="text-typeograph-2 text-sm lg:text-lg">
                   ₹ {service.rentalOffSeasonPrice}
@@ -47,7 +49,13 @@ export default function RentalCardList({ rentals }: { rentals: any }) {
           <div className="inline-flex">
             <button
               type="button"
-              onClick={() => setContactForm(true)}
+              onClick={() => {
+                console.log(service.rentalType);
+                service.rentalType === "bike"
+                  ? setQueryFor("bike_rental")
+                  : setQueryFor("car_rental");
+                setContactForm(true);
+              }}
               className="text-base flex-1 py-3 overflow-hidden text-center rounded-b-xl lg:text-xl font-semibold text-white bg-primary"
             >
               Click For More Details
@@ -77,6 +85,7 @@ export default function RentalCardList({ rentals }: { rentals: any }) {
             <ContactComponent
               normalHeading="Want to Rent?"
               highlightedHeading="Discuss Now"
+              queryFor={queryFor}
             />
           </div>
         </div>

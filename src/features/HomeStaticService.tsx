@@ -101,6 +101,7 @@ export default function HomeStaticService() {
             <ContactComponent
               normalHeading="Want to book you travel?"
               highlightedHeading="Discuss Now"
+              queryFor="tour_package"
             />
           </div>
         </div>

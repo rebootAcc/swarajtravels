@@ -29,6 +29,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [availableCities, setAvailableCities] = useState([]);
   const [contactForm, setContactForm] = useState<boolean>(false);
+  const [queryFor, setQueryFor] = useState<string>("");
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     latest > 0 ? setIsScrolled(true) : setIsScrolled(false);
@@ -84,6 +85,7 @@ export default function Navbar() {
       href: null,
       label: "Flight Ticket",
       handelClick: () => {
+        setQueryFor("flight_booking");
         setContactForm(true);
       },
     },
@@ -91,6 +93,7 @@ export default function Navbar() {
       href: null,
       label: "Rail Ticket",
       handelClick: () => {
+        setQueryFor("rail_booking");
         setContactForm(true);
       },
     },
@@ -124,6 +127,7 @@ export default function Navbar() {
       href: null,
       label: "Flight Ticket",
       handelClick: () => {
+        setQueryFor("flight_booking");
         setContactForm(true);
         toggleOpen();
       },
@@ -132,6 +136,7 @@ export default function Navbar() {
       href: null,
       label: "Rail Ticket",
       handelClick: () => {
+        setQueryFor("rail_booking");
         setContactForm(true);
         toggleOpen();
       },
@@ -315,6 +320,7 @@ export default function Navbar() {
             <ContactComponent
               normalHeading="Want to book you travel?"
               highlightedHeading="Discuss Now"
+              queryFor={queryFor}
             />
           </div>
         </div>

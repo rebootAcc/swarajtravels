@@ -11,6 +11,7 @@ export default function OurServices() {
     {
       label: "Flight Ticket",
       icon: "/services/flight-booking.jpg",
+      queryFor: "flight_booking",
       handekClick: () => {
         return 0;
       },
@@ -18,6 +19,7 @@ export default function OurServices() {
     {
       label: "Rail Ticket",
       icon: "/services/rail-booking.jpg",
+      queryFor: "rail_booking",
       handekClick: () => {
         return 0;
       },
@@ -25,6 +27,7 @@ export default function OurServices() {
     {
       label: "Bike Rental",
       icon: "/services/bike-rental-booking.jpg",
+      queryFor: "bike_rental",
       handekClick: () => {
         return 0;
       },
@@ -32,13 +35,7 @@ export default function OurServices() {
     {
       label: "Car Rental Service",
       icon: "/services/car-rental-booking.jpg",
-      handekClick: () => {
-        return 0;
-      },
-    },
-    {
-      label: "Hotel Booking Service",
-      icon: "/services/hotel-booking.jpg",
+      queryFor: "car_rental",
       handekClick: () => {
         return 0;
       },
@@ -47,6 +44,7 @@ export default function OurServices() {
   const [currentCity, setCurrentCity] = useState<string>("");
   const [allCities, setAllCities] = useState<string[]>([]);
   const [contactForm, setContactForm] = useState<boolean>(false);
+  const [queryFor, setQueryFor] = useState<string>("");
 
   const contactBoxRef = useClickOutSide(() => setContactForm(false));
 
@@ -96,7 +94,7 @@ export default function OurServices() {
               </select>
             </div>
             <h2 className="text-typeograph-1 text-base text-center lg:text-xl font-semibold my-3 md:my-8">
-              Top Packages
+              Tour Packages
             </h2>
           </div>
           <div className="inline-flex">
@@ -127,7 +125,10 @@ export default function OurServices() {
             <div className="inline-flex">
               <button
                 type="button"
-                onClick={() => setContactForm(true)}
+                onClick={() => {
+                  setQueryFor(service.queryFor);
+                  setContactForm(true);
+                }}
                 className="text-base flex-1 py-3 overflow-hidden rounded-bl-xl lg:text-xl font-semibold text-white bg-primary"
               >
                 Book Now
@@ -143,6 +144,30 @@ export default function OurServices() {
             </div>
           </Card>
         ))}
+        <Card>
+          <div className="flex flex-col flex-1 p-3 lg:p-5 !pb-0">
+            <div className="relative">
+              <Image
+                src={"/services/hotel-booking.jpg"}
+                alt="service"
+                width={376}
+                height={408}
+                className="lg:h-[280px] xl:h-[400px] w-full object-cover rounded-lg"
+              />
+            </div>
+            <h2 className="text-typeograph-1 text-base text-center lg:text-xl font-semibold my-3 md:my-8">
+              Hotel Booking Service
+            </h2>
+          </div>
+          <div className="inline-flex">
+            <button
+              type="button"
+              className="text-base flex-1 py-3 overflow-hidden text-center rounded-b-xl lg:text-xl font-semibold text-white bg-primary"
+            >
+              Coming Soon
+            </button>
+          </div>
+        </Card>
       </div>
       {contactForm && (
         <div className="fixed w-full h-full top-0 left-0 flex items-center justify-center bg-black/40 z-[1100]">
@@ -166,6 +191,7 @@ export default function OurServices() {
             <ContactComponent
               normalHeading="Want to book you travel?"
               highlightedHeading="Discuss Now"
+              queryFor={queryFor}
             />
           </div>
         </div>
