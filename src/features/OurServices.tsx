@@ -12,31 +12,28 @@ export default function OurServices() {
       label: "Flight Ticket",
       icon: "/services/flight-booking.jpg",
       queryFor: "flight_booking",
-      handekClick: () => {
-        return 0;
-      },
     },
     {
       label: "Rail Ticket",
       icon: "/services/rail-booking.jpg",
       queryFor: "rail_booking",
-      handekClick: () => {
-        return 0;
-      },
     },
+  ];
+
+  const carBikeCardData = [
     {
       label: "Bike Rental",
       icon: "/services/bike-rental-booking.jpg",
-      queryFor: "bike_rental",
-      handekClick: () => {
+      href: "/rental/bike",
+      handelClick: () => {
         return 0;
       },
     },
     {
       label: "Car Rental Service",
       icon: "/services/car-rental-booking.jpg",
-      queryFor: "car_rental",
-      handekClick: () => {
+      href: "/rental/car",
+      handelClick: () => {
         return 0;
       },
     },
@@ -66,7 +63,7 @@ export default function OurServices() {
   return (
     <section className="p-4 sm:p-10 xlg:p-20 flex flex-col gap-4 lg:gap-8">
       <h2 className="text-xl sm:text-3xl font-bold text-typeograph-1">
-        Services We Provided
+        Services We Provide
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 justify-center lg:justify-normal gap-4">
         <Card>
@@ -102,7 +99,7 @@ export default function OurServices() {
               href={`/services/${currentCity}`}
               className="text-base flex-1 py-3 overflow-hidden text-center rounded-b-xl lg:text-xl font-semibold text-white bg-primary"
             >
-              Click For More Details
+              View Details
             </Link>
           </div>
         </Card>
@@ -131,15 +128,33 @@ export default function OurServices() {
                 }}
                 className="text-base flex-1 py-3 overflow-hidden rounded-bl-xl lg:text-xl font-semibold text-white bg-primary"
               >
-                Book Now
+                View Details
               </button>
+            </div>
+          </Card>
+        ))}
+        {carBikeCardData.map((service, id) => (
+          <Card key={id}>
+            <div className="flex flex-col flex-1 p-3 lg:p-5 !pb-0">
+              <div className="">
+                <Image
+                  src={service.icon}
+                  alt="service"
+                  width={376}
+                  height={408}
+                  className="lg:h-[280px] xl:h-[400px] w-full object-cover rounded-lg"
+                />
+              </div>
+              <h2 className="text-typeograph-1 text-base text-center lg:text-xl font-semibold my-3 md:my-8">
+                {service.label}
+              </h2>
+            </div>
+            <div className="inline-flex">
               <Link
-                href="https://web.whatsapp.com/send?phone=919339013347"
-                className="text-base flex-1 py-3 overflow-hidden rounded-br-xl lg:text-xl font-semibold text-white bg-secondary text-center"
-                target="_blank"
-                referrerPolicy="no-referrer"
+                href={service.href}
+                className="text-base flex-1 py-3 overflow-hidden rounded-bl-xl lg:text-xl font-semibold text-white bg-primary text-center"
               >
-                Whatsapp Us
+                View Details
               </Link>
             </div>
           </Card>

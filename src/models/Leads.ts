@@ -4,7 +4,7 @@ interface LeadsDocument extends Document {
   leadId: string;
   leadName: string;
   leadPhoneNumber: string;
-  leadEmail: string;
+  leadEmail?: string;
   leadQuery: string;
   leadType: string;
   leadPackage?: string;
@@ -21,7 +21,7 @@ const leadSchema = new Schema<LeadsDocument>(
     leadId: { type: String, required: true, unique: true },
     leadName: { type: String, required: true },
     leadPhoneNumber: { type: String, required: true },
-    leadEmail: { type: String, required: true },
+    leadEmail: { type: String },
     leadType: { type: String, required: true },
     leadQuery: { type: String, required: true },
     leadPackage: { type: String },

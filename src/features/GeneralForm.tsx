@@ -5,7 +5,7 @@ export default function GeneralForm() {
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [location, setLocation] = useState<string>("tour_package");
   const [message, setMessage] = useState<string>("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -24,9 +24,11 @@ export default function GeneralForm() {
           leadMessage: message,
         }),
       });
-      const result = await response.json();
-      console.log(result);
-      if (response.ok) {
+      const _result = await response.json();
+      if (response.ok && _result) {
+        alert(
+          "Your Query has been submitted successfully. Our team will contact you soon!"
+        );
         setName("");
         setEmail("");
         setPhone("");

@@ -30,34 +30,16 @@ export default function LeadsTable({
   useEffect(() => {
     if (leadType === "general") {
       setCustomizeTableData({
-        tableHead: [
-          "Date & Time",
-          "Name",
-          "Number",
-          "Email",
-          "Query",
-          "Action",
-        ],
+        tableHead: ["Date & Time", "Name", "Number", "Query", "Action"],
         tableBody: allLeads.map((item: any) => ({
           "Date & Time": `${extractDateTime(item.createdAt).date} - ${
             extractDateTime(item.createdAt).time
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           Query: item.leadQuery,
           Action: (
             <div className="flex space-x-2 items-center" key={item._id}>
-              <div className="inline-flex items-center cursor-pointer">
-                <select
-                  value={item.leadStatus}
-                  className="capitalize outline-none"
-                  onChange={(e) => updateActiveStatus(item._id, e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Closed">Closed</option>
-                </select>
-              </div>
               <div className=" text-violet-600 cursor-pointer">
                 <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
@@ -81,34 +63,16 @@ export default function LeadsTable({
       });
     } else if (leadType === "tour_package") {
       setCustomizeTableData({
-        tableHead: [
-          "Date & Time",
-          "Name",
-          "Number",
-          "Email",
-          "Package",
-          "Action",
-        ],
+        tableHead: ["Date & Time", "Name", "Number", "Package", "Action"],
         tableBody: allLeads.map((item: any) => ({
           "Date & Time": `${extractDateTime(item.createdAt).date} - ${
             extractDateTime(item.createdAt).time
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           Package: item.leadPackage,
           Action: (
             <div className="flex space-x-2 items-center" key={item._id}>
-              <div className="inline-flex items-center cursor-pointer">
-                <select
-                  value={item.leadStatus}
-                  className="capitalize outline-none"
-                  onChange={(e) => updateActiveStatus(item._id, e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Closed">Closed</option>
-                </select>
-              </div>
               <div className=" text-violet-600 cursor-pointer">
                 <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
@@ -136,7 +100,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartPoint",
           "EndPoint",
           "Action",
@@ -147,21 +110,10 @@ export default function LeadsTable({
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           StartPoint: item.startPoint,
           EndPoint: item.endPoint,
           Action: (
             <div className="flex space-x-2 items-center" key={item._id}>
-              <div className="inline-flex items-center cursor-pointer">
-                <select
-                  value={item.leadStatus}
-                  className="capitalize outline-none"
-                  onChange={(e) => updateActiveStatus(item._id, e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Closed">Closed</option>
-                </select>
-              </div>
               <div className=" text-violet-600 cursor-pointer">
                 <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
@@ -189,7 +141,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartPoint",
           "EndPoint",
           "Action",
@@ -200,21 +151,10 @@ export default function LeadsTable({
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           StartPoint: item.startPoint,
           EndPoint: item.endPoint,
           Action: (
             <div className="flex space-x-2 items-center" key={item._id}>
-              <div className="inline-flex items-center cursor-pointer">
-                <select
-                  value={item.leadStatus}
-                  className="capitalize outline-none"
-                  onChange={(e) => updateActiveStatus(item._id, e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Closed">Closed</option>
-                </select>
-              </div>
               <div className=" text-violet-600 cursor-pointer">
                 <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
@@ -242,7 +182,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartDate",
           "EndDate",
           "Action",
@@ -258,16 +197,6 @@ export default function LeadsTable({
           EndDate: extractDateTime(item.endDate).date,
           Action: (
             <div className="flex space-x-2 items-center" key={item._id}>
-              <div className="inline-flex items-center cursor-pointer">
-                <select
-                  value={item.leadStatus}
-                  className="capitalize outline-none"
-                  onChange={(e) => updateActiveStatus(item._id, e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Closed">Closed</option>
-                </select>
-              </div>
               <div className=" text-violet-600 cursor-pointer">
                 <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
@@ -295,7 +224,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartDate",
           "EndDate",
           "Action",
@@ -311,16 +239,6 @@ export default function LeadsTable({
           EndDate: extractDateTime(item.endDate).date,
           Action: (
             <div className="flex space-x-2 items-center" key={item._id}>
-              <div className="inline-flex items-center cursor-pointer">
-                <select
-                  value={item.leadStatus}
-                  className="capitalize outline-none"
-                  onChange={(e) => updateActiveStatus(item._id, e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Closed">Closed</option>
-                </select>
-              </div>
               <div className=" text-violet-600 cursor-pointer">
                 <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
@@ -344,28 +262,6 @@ export default function LeadsTable({
       });
     }
   }, [leadType]);
-
-  const updateActiveStatus = async (packId: string, updatedValue: string) => {
-    try {
-      const response = await fetch(`/api/leads/${packId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          updatedData: { leadStatus: updatedValue },
-        }),
-      });
-      const result = await response.json();
-      setAllLeads((prevPackages: any) => {
-        return prevPackages.map((pack: any) =>
-          pack._id === result._id
-            ? { ...pack, leadStatus: result.leadStatus }
-            : pack
-        );
-      });
-    } catch (error) {
-      console.error("Error updating package status", error);
-    }
-  };
 
   const deletePackage = async (packId: string) => {
     try {
@@ -414,9 +310,7 @@ export default function LeadsTable({
   }
 
   const openViewPackage = (rentId: string) => {
-    const packageToView = allLeads.find(
-      (item: any) => item.leadId === rentId
-    );
+    const packageToView = allLeads.find((item: any) => item.leadId === rentId);
     setViewLeads(packageToView); // Set the selected package data
     setIsViewOpen(true); // Open the slide-in component
   };

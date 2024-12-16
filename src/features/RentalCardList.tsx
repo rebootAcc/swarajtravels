@@ -58,7 +58,7 @@ export default function RentalCardList({ rentals }: { rentals: any }) {
               }}
               className="text-base flex-1 py-3 overflow-hidden text-center rounded-b-xl lg:text-xl font-semibold text-white bg-primary"
             >
-              Click For More Details
+              View Details
             </button>
           </div>
         </Card>
