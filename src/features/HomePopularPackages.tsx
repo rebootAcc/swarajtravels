@@ -26,7 +26,7 @@ export default function HomePopularPackages({ packages }: { packages: any }) {
                   {service.packageName}
                 </h2>
                 <p className="text-typeograph-2 text-sm lg:text-lg">
-                  {service.packageDuration} days
+                  {service.packageIternary}
                 </p>
               </div>
             </div>
