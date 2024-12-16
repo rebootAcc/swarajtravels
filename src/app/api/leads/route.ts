@@ -20,14 +20,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       endPoint,
     } = await request.json();
     // Check if all fields are provided
-    if (
-      !leadName ||
-      !leadEmail ||
-      !leadPhoneNumber ||
-      !leadQuery ||
-      !leadMessage ||
-      !leadType
-    ) {
+    if (!leadName || !leadPhoneNumber || !leadQuery || !leadType) {
       return NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }
@@ -70,16 +63,31 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const url = new URL(request.url);
     const leadType = url.searchParams.get("leadType");
     const leadStatus = url.searchParams.get("leadStatus");
+    const startDate = url.searchParams.get("startDate");
+    const endDate = url.searchParams.get("endDate");
     const page = parseInt(url.searchParams.get("page") || "1", 10);
     const limit = parseInt(url.searchParams.get("limit") || "10", 10);
-    const query: { leadType?: string; leadStatus?: string } = {};
+    const query: { leadType?: string; leadStatus?: string; createdAt?: any } =
+      {};
 
+    // Add filters for leadType and leadStatus
     if (leadType) {
       query.leadType = leadType;
     }
 
     if (leadStatus) {
       query.leadStatus = leadStatus;
+    }
+
+    // Add date range filter for createdAt
+    if (startDate || endDate) {
+      query.createdAt = {};
+      if (startDate) {
+        query.createdAt.$gte = new Date(startDate);
+      }
+      if (endDate) {
+        query.createdAt.$lte = new Date(endDate);
+      }
     }
 
     const skip = (page - 1) * limit;
@@ -105,7 +113,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "An Error Occured" }, { status: 500 });
+    console.error("Error fetching leads:", error);
+    return NextResponse.json({ message: "An Error Occurred" }, { status: 500 });
   }
 }

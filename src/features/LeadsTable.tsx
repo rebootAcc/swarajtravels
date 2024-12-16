@@ -31,21 +31,13 @@ export default function LeadsTable({
   useEffect(() => {
     if (leadType === "general") {
       setCustomizeTableData({
-        tableHead: [
-          "Date & Time",
-          "Name",
-          "Number",
-          "Email",
-          "Query",
-          "Action",
-        ],
+        tableHead: ["Date & Time", "Name", "Number", "Query", "Action"],
         tableBody: allLeads.map((item: any) => ({
           "Date & Time": `${extractDateTime(item.createdAt).date} - ${
             extractDateTime(item.createdAt).time
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           Query: item.leadQuery,
           Action: (
             <div className="flex space-x-2 items-center" key={item.leadId}>
@@ -77,21 +69,13 @@ export default function LeadsTable({
       });
     } else if (leadType === "tour_package") {
       setCustomizeTableData({
-        tableHead: [
-          "Date & Time",
-          "Name",
-          "Number",
-          "Email",
-          "Package",
-          "Action",
-        ],
+        tableHead: ["Date & Time", "Name", "Number", "Package", "Action"],
         tableBody: allLeads.map((item: any) => ({
           "Date & Time": `${extractDateTime(item.createdAt).date} - ${
             extractDateTime(item.createdAt).time
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           Package: item.leadPackage,
           Action: (
             <div className="flex space-x-2 items-center" key={item.leadId}>
@@ -127,7 +111,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartPoint",
           "EndPoint",
           "Action",
@@ -138,7 +121,6 @@ export default function LeadsTable({
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           StartPoint: item.startPoint,
           EndPoint: item.endPoint,
           Action: (
@@ -175,7 +157,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartPoint",
           "EndPoint",
           "Action",
@@ -186,7 +167,6 @@ export default function LeadsTable({
           }`,
           Name: item.leadName,
           Number: item.leadPhoneNumber,
-          Email: item.leadEmail,
           StartPoint: item.startPoint,
           EndPoint: item.endPoint,
           Action: (
@@ -223,7 +203,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartDate",
           "EndDate",
           "Action",
@@ -271,7 +250,6 @@ export default function LeadsTable({
           "Date & Time",
           "Name",
           "Number",
-          "Email",
           "StartDate",
           "EndDate",
           "Action",
@@ -314,7 +292,7 @@ export default function LeadsTable({
         })),
       });
     }
-  }, [leadType]);
+  }, [leadType, allLeads]);
 
   const updateActiveStatus = async (packId: string, updatedValue: string) => {
     try {

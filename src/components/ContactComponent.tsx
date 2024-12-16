@@ -14,7 +14,6 @@ export default function ContactComponent({
 }) {
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
   const [location, setLocation] = useState<string>(queryFor);
   const [message, setMessage] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
@@ -33,7 +32,6 @@ export default function ContactComponent({
       body = {
         leadName: name,
         leadPhoneNumber: phone,
-        leadEmail: email,
         leadType: location,
         leadQuery: location,
         leadMessage: message,
@@ -44,7 +42,6 @@ export default function ContactComponent({
       body = {
         leadName: name,
         leadPhoneNumber: phone,
-        leadEmail: email,
         leadType: location,
         leadQuery: location,
         leadMessage: message,
@@ -55,7 +52,6 @@ export default function ContactComponent({
       body = {
         leadName: name,
         leadPhoneNumber: phone,
-        leadEmail: email,
         leadType: location,
         leadQuery: location,
         leadMessage: message,
@@ -65,7 +61,6 @@ export default function ContactComponent({
       body = {
         leadName: name,
         leadPhoneNumber: phone,
-        leadEmail: email,
         leadType: location,
         leadQuery: location,
         leadMessage: message,
@@ -76,7 +71,6 @@ export default function ContactComponent({
       body = {
         leadName: name,
         leadPhoneNumber: phone,
-        leadEmail: email,
         leadType: location,
         leadQuery: location,
         leadMessage: message,
@@ -92,10 +86,11 @@ export default function ContactComponent({
         body: JSON.stringify(body),
       });
       const result = await response.json();
-      console.log(result);
-      if (response.ok) {
+      if (response.ok && result) {
+        alert(
+          "Your Query has been submitted successfully. Our team will contact you soon!"
+        );
         setName("");
-        setEmail("");
         setPhone("");
         setLocation("");
         setMessage("");
@@ -130,14 +125,6 @@ export default function ContactComponent({
             value={phone}
             required
             onChange={(e) => setPhone(e.target.value)}
-            className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />
           <div className="flex gap-2">
@@ -194,6 +181,7 @@ export default function ContactComponent({
               <input
                 type="date"
                 value={startDate}
+                placeholder="Start date"
                 onChange={(e) => setStartDate(e.target.value)}
                 className="py-3 lg:py-5 px-4 lg:px-6 outline-none border border-dashed border-primary rounded flex-1"
               />
@@ -223,13 +211,15 @@ export default function ContactComponent({
               />
             </div>
           )}
-          <input
-            type="text"
-            placeholder="Message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
-          />
+          {location === "tour_package" && (
+            <input
+              type="text"
+              placeholder="Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
+            />
+          )}
           <button
             type="submit"
             className="text-2xl text-white bg-primary lg:py-5 py-3 rounded"
