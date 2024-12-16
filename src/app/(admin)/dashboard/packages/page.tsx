@@ -38,6 +38,39 @@ export default async function Packages() {
       </div>
       <div className="xlg:px-8 px-4 py-4 flex flex-col gap-2">
         <PacakagesTable tableData={pageData} />
+        <div className="flex justify-between py-4 text-typeograph-1 text-sm lg:text-base">
+          <span>
+            Showing {pageData.packages.length} of{" "}
+            {pageData.pagination.totalPackages} packages
+          </span>
+          <div>
+            {pageData.pagination.currentPage !== 1 && (
+              <Link
+                href={`/dashboard/leads/general?page=${
+                  pageData.pagination.currentPage - 1
+                }`}
+                className="px-3 py-1 mx-1 border rounded disabled:cursor-not-allowed"
+              >
+                Prev
+              </Link>
+            )}
+            <span className="font-bold">
+              {pageData.pagination.currentPage} /{" "}
+              {pageData.pagination.totalPages}
+            </span>
+            {pageData.pagination.currentPage !==
+              pageData.pagination.totalPages && (
+              <Link
+                href={`/dashboard/leads/general?page=${
+                  pageData.pagination.currentPage + 1
+                }`}
+                className="px-3 py-1 mx-1 border rounded disabled:cursor-not-allowed"
+              >
+                Next
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </AdminDashboardTemplate>
   );

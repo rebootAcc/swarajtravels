@@ -92,7 +92,7 @@ export default function PackagesTable({ tableData }: { tableData: any }) {
               <div className="absolute top-[2px] left-[2px] bg-white border border-gray-300 rounded-full w-3 h-3 transition-transform peer-checked:translate-x-4 peer-checked:border-green-600"></div>
             </label>
           </div>
-          <div className=" text-violet-600">
+          <div className=" text-violet-600 cursor-pointer">
             <IoEye onClick={() => openViewPackage(item.packageId)} />
           </div>
           <Link

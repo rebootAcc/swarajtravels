@@ -44,6 +44,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       leadEmail,
       leadPhoneNumber,
       leadType,
+      leadMessage,
       leadQuery,
       leadPackage,
       startDate,

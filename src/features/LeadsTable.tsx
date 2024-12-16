@@ -2,6 +2,8 @@
 
 import TableComponent from "@/components/TableComponent";
 import { useEffect, useState } from "react";
+import ViewLeadDetails from "./ViewLeadDetails";
+import { IoEye } from "react-icons/io5";
 
 export default function LeadsTable({
   tableData,
@@ -22,6 +24,8 @@ export default function LeadsTable({
     tableHead: [],
     tableBody: [],
   });
+  const [viewLeads, setViewLeads] = useState(null);
+  const [isViewOpen, setIsViewOpen] = useState(false);
 
   useEffect(() => {
     if (leadType === "general") {
@@ -43,7 +47,7 @@ export default function LeadsTable({
           Email: item.leadEmail,
           Query: item.leadQuery,
           Action: (
-            <div className="flex space-x-2" key={item._id}>
+            <div className="flex space-x-2 items-center" key={item._id}>
               <div className="inline-flex items-center cursor-pointer">
                 <select
                   value={item.leadStatus}
@@ -53,6 +57,9 @@ export default function LeadsTable({
                   <option value="Pending">Pending</option>
                   <option value="Closed">Closed</option>
                 </select>
+              </div>
+              <div className=" text-violet-600 cursor-pointer">
+                <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
               <button
                 type="button"
@@ -91,7 +98,7 @@ export default function LeadsTable({
           Email: item.leadEmail,
           Package: item.leadPackage,
           Action: (
-            <div className="flex space-x-2" key={item._id}>
+            <div className="flex space-x-2 items-center" key={item._id}>
               <div className="inline-flex items-center cursor-pointer">
                 <select
                   value={item.leadStatus}
@@ -101,6 +108,9 @@ export default function LeadsTable({
                   <option value="Pending">Pending</option>
                   <option value="Closed">Closed</option>
                 </select>
+              </div>
+              <div className=" text-violet-600 cursor-pointer">
+                <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
               <button
                 type="button"
@@ -141,7 +151,7 @@ export default function LeadsTable({
           StartPoint: item.startPoint,
           EndPoint: item.endPoint,
           Action: (
-            <div className="flex space-x-2" key={item._id}>
+            <div className="flex space-x-2 items-center" key={item._id}>
               <div className="inline-flex items-center cursor-pointer">
                 <select
                   value={item.leadStatus}
@@ -151,6 +161,9 @@ export default function LeadsTable({
                   <option value="Pending">Pending</option>
                   <option value="Closed">Closed</option>
                 </select>
+              </div>
+              <div className=" text-violet-600 cursor-pointer">
+                <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
               <button
                 type="button"
@@ -191,7 +204,7 @@ export default function LeadsTable({
           StartPoint: item.startPoint,
           EndPoint: item.endPoint,
           Action: (
-            <div className="flex space-x-2" key={item._id}>
+            <div className="flex space-x-2 items-center" key={item._id}>
               <div className="inline-flex items-center cursor-pointer">
                 <select
                   value={item.leadStatus}
@@ -201,6 +214,9 @@ export default function LeadsTable({
                   <option value="Pending">Pending</option>
                   <option value="Closed">Closed</option>
                 </select>
+              </div>
+              <div className=" text-violet-600 cursor-pointer">
+                <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
               <button
                 type="button"
@@ -241,7 +257,7 @@ export default function LeadsTable({
           StartDate: extractDateTime(item.startDate).date,
           EndDate: extractDateTime(item.endDate).date,
           Action: (
-            <div className="flex space-x-2" key={item._id}>
+            <div className="flex space-x-2 items-center" key={item._id}>
               <div className="inline-flex items-center cursor-pointer">
                 <select
                   value={item.leadStatus}
@@ -251,6 +267,9 @@ export default function LeadsTable({
                   <option value="Pending">Pending</option>
                   <option value="Closed">Closed</option>
                 </select>
+              </div>
+              <div className=" text-violet-600 cursor-pointer">
+                <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
               <button
                 type="button"
@@ -291,7 +310,7 @@ export default function LeadsTable({
           StartDate: extractDateTime(item.startDate).date,
           EndDate: extractDateTime(item.endDate).date,
           Action: (
-            <div className="flex space-x-2" key={item._id}>
+            <div className="flex space-x-2 items-center" key={item._id}>
               <div className="inline-flex items-center cursor-pointer">
                 <select
                   value={item.leadStatus}
@@ -301,6 +320,9 @@ export default function LeadsTable({
                   <option value="Pending">Pending</option>
                   <option value="Closed">Closed</option>
                 </select>
+              </div>
+              <div className=" text-violet-600 cursor-pointer">
+                <IoEye onClick={() => openViewPackage(item.leadId)} />
               </div>
               <button
                 type="button"
@@ -391,9 +413,20 @@ export default function LeadsTable({
     };
   }
 
+  const openViewPackage = (rentId: string) => {
+    const packageToView = allLeads.find(
+      (item: any) => item.leadId === rentId
+    );
+    setViewLeads(packageToView); // Set the selected package data
+    setIsViewOpen(true); // Open the slide-in component
+  };
+
   return (
     <div className="container mx-auto my-7">
       <TableComponent tableData={customizeTableData} />
+      {isViewOpen && (
+        <ViewLeadDetails leadData={viewLeads} setIsViewOpen={setIsViewOpen} />
+      )}
     </div>
   );
 }
