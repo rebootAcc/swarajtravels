@@ -2,6 +2,8 @@
 import TableComponent from "@/components/TableComponent";
 import Link from "next/link";
 import { useState } from "react";
+import ViewRentalDetails from "./ViewRentalDetails";
+import { IoEye } from "react-icons/io5";
 
 export default function RentalsTable({ tableData }: { tableData: any }) {
   const {
@@ -10,6 +12,8 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
   } = tableData;
 
   const [allPack, setAllPAck] = useState(rentals);
+  const [viewRental, setViewRental] = useState(null);
+  const [isViewOpen, setIsViewOpen] = useState(false);
 
   const updateActiveStatus = async (packId: string, updatedValue: boolean) => {
     try {
@@ -32,6 +36,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
       console.error("Error updating package status", error);
     }
   };
+  
   const deletePackage = async (packId: string) => {
     try {
       const response = await fetch(`/api/rentals/${packId}`, {
@@ -45,6 +50,12 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
     } catch (error) {
       console.error("Error Deleting rental status", error);
     }
+  };
+
+  const openViewPackage = (rentId: string) => {
+    const packageToView = allPack.find((item: any) => item.rentalId === rentId);
+    setViewRental(packageToView); // Set the selected package data
+    setIsViewOpen(true); // Open the slide-in component
   };
 
   const customizeTableData = {
@@ -61,7 +72,7 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
       "Off. Season": `₹ ${item.rentalOffSeasonPrice}`,
       "Rental Type": item.rentalType,
       Action: (
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 items-center">
           <div className="inline-flex items-center cursor-pointer">
             <label htmlFor={item._id} className="cursor-pointer relative">
               <input
@@ -77,6 +88,9 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
               <div className="relative w-8 h-4 bg-gray-200 rounded-full transition-all peer-checked:bg-green-600"></div>
               <div className="absolute top-[2px] left-[2px] bg-white border border-gray-300 rounded-full w-3 h-3 transition-transform peer-checked:translate-x-4 peer-checked:border-green-600"></div>
             </label>
+          </div>
+          <div className=" text-violet-600 cursor-pointer">
+            <IoEye onClick={() => openViewPackage(item.rentalId)} />
           </div>
           <Link
             href={`/dashboard/rentals/${item.rentalId}`}
@@ -122,6 +136,12 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
   return (
     <div className="container mx-auto my-7">
       <TableComponent tableData={customizeTableData} />
+      {isViewOpen && (
+        <ViewRentalDetails
+          rentalData={viewRental}
+          setIsViewOpen={setIsViewOpen}
+        />
+      )}
     </div>
   );
 }

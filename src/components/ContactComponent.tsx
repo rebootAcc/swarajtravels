@@ -120,6 +120,7 @@ export default function ContactComponent({
             type="text"
             placeholder="Name"
             value={name}
+            required
             onChange={(e) => setName(e.target.value)}
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />
@@ -127,6 +128,7 @@ export default function ContactComponent({
             type="tel"
             placeholder="Mobile Number"
             value={phone}
+            required
             onChange={(e) => setPhone(e.target.value)}
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />
@@ -134,6 +136,7 @@ export default function ContactComponent({
             type="email"
             placeholder="Email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />

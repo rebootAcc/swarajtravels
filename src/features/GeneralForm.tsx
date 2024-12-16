@@ -49,6 +49,7 @@ export default function GeneralForm() {
           <input
             type="text"
             placeholder="Name"
+            required
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
@@ -57,6 +58,7 @@ export default function GeneralForm() {
             type="tel"
             placeholder="Mobile Number"
             value={phone}
+            required
             onChange={(e) => setPhone(e.target.value)}
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />
@@ -64,6 +66,7 @@ export default function GeneralForm() {
             type="email"
             placeholder="Email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             className="py-3 lg:py-5 px-4 lg:px-8 outline-none border border-dashed border-primary rounded"
           />

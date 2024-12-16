@@ -23,7 +23,7 @@ export default function SideHeader() {
         </svg>
       ),
       name: "Tour Package",
-      link: "/dashboard/packages",
+      link: "/dashboard/packages?page=1",
     },
     {
       icon: (
@@ -39,7 +39,7 @@ export default function SideHeader() {
         </svg>
       ),
       name: "Car/Bike Rental",
-      link: "/dashboard/rentals",
+      link: "/dashboard/rentals?page=1",
     },
     {
       icon: (
