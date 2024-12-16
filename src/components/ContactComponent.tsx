@@ -92,7 +92,7 @@ export default function ContactComponent({
         );
         setName("");
         setPhone("");
-        setLocation("");
+        setLocation(queryFor);
         setMessage("");
         setStartDate("");
         setEndDate("");
