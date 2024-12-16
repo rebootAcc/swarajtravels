@@ -46,7 +46,7 @@ export default async function Rentals() {
           <div>
             {pageData.pagination.currentPage !== 1 && (
               <Link
-                href={`/dashboard/leads/general?page=${
+                href={`/dashboard/rentals?page=${
                   pageData.pagination.currentPage - 1
                 }`}
                 className="px-3 py-1 mx-1 border rounded disabled:cursor-not-allowed"
@@ -61,7 +61,7 @@ export default async function Rentals() {
             {pageData.pagination.currentPage !==
               pageData.pagination.totalPages && (
               <Link
-                href={`/dashboard/leads/general?page=${
+                href={`/dashboard/rentals?page=${
                   pageData.pagination.currentPage + 1
                 }`}
                 className="px-3 py-1 mx-1 border rounded disabled:cursor-not-allowed"

@@ -46,7 +46,7 @@ export default async function Packages() {
           <div>
             {pageData.pagination.currentPage !== 1 && (
               <Link
-                href={`/dashboard/leads/general?page=${
+                href={`/dashboard/packages?page=${
                   pageData.pagination.currentPage - 1
                 }`}
                 className="px-3 py-1 mx-1 border rounded disabled:cursor-not-allowed"
@@ -61,7 +61,7 @@ export default async function Packages() {
             {pageData.pagination.currentPage !==
               pageData.pagination.totalPages && (
               <Link
-                href={`/dashboard/leads/general?page=${
+                href={`/dashboard/packages?page=${
                   pageData.pagination.currentPage + 1
                 }`}
                 className="px-3 py-1 mx-1 border rounded disabled:cursor-not-allowed"
