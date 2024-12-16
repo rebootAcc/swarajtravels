@@ -1,4 +1,3 @@
-import Accordian from "@/components/Accordian";
 import Carousel from "@/components/Carousel";
 import ContactComponent from "@/components/ContactComponent";
 import DetailCard from "@/components/DetailCard";
@@ -44,7 +43,7 @@ export default async function ServiceDetails({
     {
       title: "",
       value: "",
-      icon: currentPackage._doc.packageSeatDetails.path,
+      icon: currentPackage._doc.packageSeatDetails?.path || null,
     },
   ];
 
@@ -96,6 +95,7 @@ export default async function ServiceDetails({
               normalHeading={"Are You Think to Visit"}
               highlightedHeading={`${currentPackage._doc.packageCity}?`}
               currentLocation={currentPackage._doc.packageCity}
+              queryFor="tour_package"
             />
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function Contact() {
     <WebsiteTemplate>
       <SubBanner heading="Contact Us" />
       <ContactDetails />
-      <ContactForm />
+      <ContactForm  />
     </WebsiteTemplate>
   );
 }

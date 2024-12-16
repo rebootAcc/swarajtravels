@@ -1,5 +1,5 @@
-import ContactComponent from "@/components/ContactComponent";
 import Image from "next/image";
+import GeneralForm from "./GeneralForm";
 
 export default function ContactForm() {
   return (
@@ -18,10 +18,7 @@ export default function ContactForm() {
             className="max-w-[45vw] xlg:max-w-[65vw] md:block hidden overflow-hidden object-cover"
           />
         </div>
-        <ContactComponent
-          normalHeading={"Still Confused?"}
-          highlightedHeading={"Discuss Now"}
-        />
+        <GeneralForm />
       </div>
     </section>
   );

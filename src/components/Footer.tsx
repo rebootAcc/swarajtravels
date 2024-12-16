@@ -166,10 +166,10 @@ export default function Footer() {
                     />
                   </svg>
                   <Link
-                    href="mailTo:admin@swarajtravellers.com"
+                    href="mailTo:swarajtarvellers@gmail.com"
                     className="text-base lg:text-lg font-semibold"
                   >
-                    admin@swarajtravellers.com
+                    swarajtarvellers@gmail.com
                   </Link>
                 </div>
                 <div className="inline-flex items-center gap-3 text-white text-base">

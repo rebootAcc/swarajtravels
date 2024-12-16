@@ -5,8 +5,8 @@ export default function Banner() {
   return (
     <section className="bg-[url('/assets/banner-cover.png')] bg-no-repeat bg-cover">
       <div className="px-4 sm:px-8 lg:px-16 bg-black/60 text-white flex flex-col md:flex-row items-end justify-between">
-        <Carousel>
-          {Array.from({ length: 3 }).map((_, key) => (
+        <Carousel autoplay={true} pagination={false}>
+          {Array.from({ length: 15 }).map((_, key) => (
             <div
               className="flex flex-col gap-3 md:gap-5 md:w-[50%] py-4 sm:py-6 lg:py-10"
               key={key}
