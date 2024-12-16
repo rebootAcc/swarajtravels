@@ -14,43 +14,55 @@ export default function PackagesTable({ tableData }: { tableData: any }) {
   } = tableData;
 
   const [allPack, setAllPack] = useState(packages);
-  const [viewPackage, setViewPackage] = useState(null); // To hold package data for viewing
-  const [isViewOpen, setIsViewOpen] = useState(false); // To toggle the slide-in view
+  const [viewPackage, setViewPackage] = useState(null);
+  const [isViewOpen, setIsViewOpen] = useState(false);
 
   const updateActiveStatus = async (packId: string, updatedValue: boolean) => {
     try {
       const response = await fetch(`/api/packages/${packId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          updatedData: { packageActiveStatus: updatedValue },
-        }),
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ packageActiveStatus: updatedValue }),
       });
       const result = await response.json();
-      setAllPack((prevPackages: any) => {
-        return prevPackages.map((pack: any) =>
-          pack._id === result._id
-            ? { ...pack, packageActiveStatus: result.packageActiveStatus }
-            : pack
-        );
-      });
+
+      if (response.ok) {
+        // Update the status locally if the update was successful
+        setAllPack((prevPackages: any) => {
+          return prevPackages.map((pack: any) =>
+            pack.packageId === packId
+              ? { ...pack, packageActiveStatus: updatedValue }
+              : pack
+          );
+        });
+      } else {
+        console.error("Error updating active status:", result.message);
+      }
     } catch (error) {
-      console.error("Error updating package status", error);
+      console.error("Error updating active status:", error);
     }
   };
 
-  const deletePackage = async (packId: string) => {
-    try {
-      const response = await fetch(`/api/packages/${packId}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      const result = await response.json();
-      setAllPack((prevPackages: any) => {
-        return prevPackages.filter((pack: any) => pack._id !== packId);
-      });
-    } catch (error) {
-      console.error("Error deleting package", error);
+  const deletePackage = async (packId: string, packageName: string) => {
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete this Package: ${packageName}?`
+    );
+
+    if (isConfirmed) {
+      try {
+        const response = await fetch(`/api/packages/${packId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+        const result = await response.json();
+        setAllPack((prevPackages: any) => {
+          return prevPackages.filter((pack: any) => pack.packageId !== packId);
+        });
+      } catch (error) {
+        console.error("Error deleting package", error);
+      }
     }
   };
 
@@ -76,16 +88,16 @@ export default function PackagesTable({ tableData }: { tableData: any }) {
       Duration: item.packageDuration,
       Rate: `₹ ${item.packagePrice}`,
       Action: (
-        <div className="flex items-center space-x-2" key={item._id}>
+        <div className="flex items-center space-x-2" key={item.packageId}>
           <div className="inline-flex items-center cursor-pointer">
-            <label htmlFor={item._id} className="cursor-pointer relative">
+            <label htmlFor={item.packageId} className="cursor-pointer relative">
               <input
                 type="checkbox"
                 checked={item.packageActiveStatus}
                 onChange={() =>
-                  updateActiveStatus(item._id, !item.packageActiveStatus)
+                  updateActiveStatus(item.packageId, !item.packageActiveStatus)
                 }
-                id={item._id}
+                id={item.packageId}
                 className="sr-only peer"
               />
               <div className="relative w-8 h-4 bg-gray-200 rounded-full transition-all peer-checked:bg-green-600"></div>
@@ -103,7 +115,7 @@ export default function PackagesTable({ tableData }: { tableData: any }) {
           </Link>
           <button
             type="button"
-            onClick={() => deletePackage(item._id)}
+            onClick={() => deletePackage(item.packageId, item.packageName)}
             className="text-red-600 text-base rounded-full p-2"
           >
             <RiDeleteBin6Line />
