@@ -62,7 +62,7 @@ export default function LeadsDateFilter({ leadType }: { leadType: string }) {
   };
 
   return (
-    <div className="py-6 flex items-center flex-wrap gap-6">
+    <div className="py-3 flex items-center flex-wrap gap-6">
       <span className="text-lg font-semibold text-[#777777]">Filter</span>
 
       <div className="relative">
