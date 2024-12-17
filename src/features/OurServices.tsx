@@ -126,7 +126,7 @@ export default function OurServices() {
                   setQueryFor(service.queryFor);
                   setContactForm(true);
                 }}
-                className="text-base flex-1 py-3 overflow-hidden rounded-bl-xl lg:text-xl font-semibold text-white bg-primary"
+                className="text-base flex-1 py-3 overflow-hidden rounded-b-xl lg:text-xl font-semibold text-white bg-primary"
               >
                 View Details
               </button>
@@ -152,7 +152,7 @@ export default function OurServices() {
             <div className="inline-flex">
               <Link
                 href={service.href}
-                className="text-base flex-1 py-3 overflow-hidden rounded-bl-xl lg:text-xl font-semibold text-white bg-primary text-center"
+                className="text-base flex-1 py-3 overflow-hidden rounded-b-xl lg:text-xl font-semibold text-white bg-primary text-center"
               >
                 View Details
               </Link>
