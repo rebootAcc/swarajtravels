@@ -83,22 +83,7 @@ export default function Footer() {
           <path d="M24.485 12.318C24.485 5.515 19.005 0 12.245 0 5.48.002 0 5.515 0 12.32c0 6.146 4.477 11.241 10.328 12.165v-8.607H7.222V12.32h3.11V9.603c0-3.086 1.828-4.79 4.623-4.79 1.34 0 2.741.24 2.741.24v3.03h-1.544c-1.52 0-1.994.95-1.994 1.924v2.31h3.394l-.541 3.56h-2.854v8.607c5.851-.925 10.328-6.02 10.328-12.166Z" />
         </svg>
       ),
-      href: "https://www.facebook.com/swarajtravellersslg?mibextid=ZbWKwL",
-    },
-    {
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1em"
-          height="1em"
-          fill="currentColor"
-          fillRule="evenodd"
-          clipRule="evenodd"
-        >
-          <path d="M5.952 2.073a12.302 12.302 0 1 1 13.67 20.458A12.302 12.302 0 0 1 5.952 2.073Zm13.124 13.344c.123-.297.186-.616.186-.938v-4.354a2.449 2.449 0 0 0-2.45-2.45h-8.05a2.45 2.45 0 0 0-2.45 2.45v4.354a2.45 2.45 0 0 0 2.45 2.45h8.05a2.45 2.45 0 0 0 2.264-1.512Zm-4.583-3.11-3.412 1.979v-3.97l3.412 1.99Z" />
-        </svg>
-      ),
-      href: "https://www.youtube.com/@Swaraj_Travellers",
+      href: "https://www.facebook.com/share/12LjeHfwGfD/",
     },
     {
       icon: (
@@ -113,7 +98,7 @@ export default function Footer() {
           <path d="M12.393 0a12.243 12.243 0 1 0-.123 24.485A12.243 12.243 0 0 0 12.393 0Zm7.435 15.55a4.15 4.15 0 0 1-4.175 4.176H9.135a4.152 4.152 0 0 1-4.176-4.174v-6.52a4.15 4.15 0 0 1 4.175-4.175h6.52a4.15 4.15 0 0 1 4.174 4.174v6.52Z" />
         </svg>
       ),
-      href: "",
+      href: "https://www.instagram.com/travelsden_official?igsh=b2J6M2x4MGNvZmpk",
     },
   ];
 
@@ -132,7 +117,7 @@ export default function Footer() {
               />
             </Link>
             <h3 className="text-base font-semibold text-[#d1d1d1]">
-              Swaraj Travellers are the one of the oldest Tour Operator, Flight
+              Travels Den are the one of the oldest Tour Operator, Flight
               Ticket, Rail Ticket, Bike &amp; Car Rental Service Provider in
               Siliguri.
             </h3>
@@ -156,13 +141,13 @@ export default function Footer() {
                     />
                   </svg>
                   <Link
-                    href="https://maps.app.goo.gl/6RyL4uf6naKPTYyz6"
+                    href="https://maps.app.goo.gl/mKoGM3G5MNJe4pX1A"
                     target="_blank"
                     referrerPolicy="no-referrer"
                     className="text-base lg:text-lg font-semibold"
                   >
-                    B.R.Ambedkar Road, Dabgram, Siliguri, West-Bengal , Pin -
-                    734004.
+                    DAK GHAR SARANI POST OFFICE ROAD, NJP, BHAKTINAGAR DIST -
+                    JALPAIGURI SILIGURI Pin-734007
                   </Link>
                 </div>
                 <div className="inline-flex items-center gap-3 text-white text-base">
@@ -199,9 +184,10 @@ export default function Footer() {
                     <path d="M14.927 7.7c-.445-2.594-2.745-4.578-5.517-4.578-2.81 0-5.833 2.284-5.591 5.87 2.29-.92 4.015-2.922 4.506-5.36a7.465 7.465 0 0 0 6.602 4.067Z" />
                   </svg>
                   <h3 className="text-base lg:text-lg font-semibold">
-                    <Link href="tel:+916297661559">+91 6297661559</Link> /{" "}
-                    <Link href="tel:+919339013347">+91 9339013347</Link> /{" "}
-                    <Link href="tel:+918900143969">+91 8900143969</Link>
+                    <Link href="tel:+919339013347">+91 93390 13347</Link> /{" "}
+                    <Link href="tel:+916297661559">+91 62976 61559</Link> /{" "}
+                    <Link href="tel:+918900143969">+91 89001 43969</Link>
+                    <Link href="tel:+918918065464">+91 89180 65464</Link>
                   </h3>
                 </div>
               </div>
@@ -248,7 +234,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <div className="">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d26358.719623245368!2d88.4169369!3d26.7086268!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e441e04cb46fa1%3A0x7763262b109a52e8!2sSwaraj%20Travellers!5e1!3m2!1sen!2sin!4v1732616251886!5m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d68232.31428117937!2d88.38845581078961!3d26.718175919316817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e4419ddbd461ed%3A0x16d266792a4b85b5!2sRabindra%20sarani%20post%20office!5e1!3m2!1sen!2sin!4v1750399549283!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 className="border-none rounded-md"
@@ -287,7 +273,7 @@ export default function Footer() {
           <h1 className="text-base text-center">
             Copyright 2024{" "}
             <Link href="/" className="font-bold">
-              Swaraj Travellers
+              Travels Den
             </Link>{" "}
             | All Rights Reserved.{" "}
             {[
@@ -307,7 +293,7 @@ export default function Footer() {
               target="_blank"
               className="font-bold"
             >
-              Reboot Pvt. Ltd.
+              Reboot AI Pvt. Ltd.
             </Link>
           </h1>
         </div>

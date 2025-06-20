@@ -44,7 +44,7 @@ export default function WhyChooseUs() {
             Why Choose Us
           </h1>
           <p className="text-typeograph-2 text-sm sm:text-base xl:text-xl">
-            Swaraj Travellers is a government-recognized, top-rated tour operator
+            Travels Den is a government-recognized, top-rated tour operator
             based in Siliguri, India, offering a wide range of travel solutions
             for tourists. Specializing in destinations like Darjeeling, Dooars,
             Kalimpong, Sikkim, and Rajasthan, we provide an all-encompassing
@@ -56,7 +56,7 @@ export default function WhyChooseUs() {
             rail tickets, flight bookings, and personalized bike and car rental
             services. We ensure that every part of your journey is taken care
             of, from transportation to accommodation, all at competitive prices.
-            At Swaraj Travellers, customer satisfaction is our top priority, and we
+            At Travels Den, customer satisfaction is our top priority, and we
             are dedicated to making your travel experience as seamless and
             enjoyable as possible. With years of expertise in the travel
             industry, we&apos;ve earned a reputation for reliability, comfort,

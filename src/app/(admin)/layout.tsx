@@ -3,9 +3,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Swaraj Travellers Admin",
+  title: "Travels Den Admin",
   description:
-    "Swaraj Travellers made by Reboot AI private limited. Here you can find your dream spot travels package in your budget and much more",
+    "Travels Den made by Reboot AI private limited. Here you can find your dream spot travels package in your budget and much more",
 };
 
 export default async function AdminLayout({
