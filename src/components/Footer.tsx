@@ -164,10 +164,10 @@ export default function Footer() {
                     />
                   </svg>
                   <Link
-                    href="mailTo:swarajtravellers@gmail.com"
+                    href="mailTo:travelsden.official@gmail.com"
                     className="text-base lg:text-lg font-semibold"
                   >
-                    swarajtravellers@gmail.com
+                    travelsden.official@gmail.com
                   </Link>
                 </div>
                 <div className="inline-flex items-center gap-3 text-white text-base">
@@ -186,7 +186,7 @@ export default function Footer() {
                   <h3 className="text-base lg:text-lg font-semibold">
                     <Link href="tel:+919339013347">+91 93390 13347</Link> /{" "}
                     <Link href="tel:+916297661559">+91 62976 61559</Link> /{" "}
-                    <Link href="tel:+918900143969">+91 89001 43969</Link>
+                    <Link href="tel:+918900143969">+91 89001 43969</Link> /{" "}
                     <Link href="tel:+918918065464">+91 89180 65464</Link>
                   </h3>
                 </div>

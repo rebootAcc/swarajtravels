@@ -61,14 +61,6 @@ export default function ContactDetails() {
               </h2>
               <div className="flex flex-wrap gap-1">
                 <Link
-                  href="tel:+916297661559"
-                  referrerPolicy="no-referrer"
-                  target="_blank"
-                  className="text-typeograph-2 font-medium text-base sm:text-xl"
-                >
-                  +91 6297661559
-                </Link>
-                <Link
                   href="tel:+919339013347"
                   referrerPolicy="no-referrer"
                   target="_blank"
@@ -77,12 +69,28 @@ export default function ContactDetails() {
                   +91 9339013347
                 </Link>
                 <Link
+                  href="tel:+916297661559"
+                  referrerPolicy="no-referrer"
+                  target="_blank"
+                  className="text-typeograph-2 font-medium text-base sm:text-xl"
+                >
+                  +91 6297661559
+                </Link>
+                <Link
                   href="tel:+918900143969"
                   referrerPolicy="no-referrer"
                   target="_blank"
                   className="text-typeograph-2 font-medium text-base sm:text-xl"
                 >
                   +91 8900143969
+                </Link>
+                <Link
+                  href="tel:+918918065464"
+                  referrerPolicy="no-referrer"
+                  target="_blank"
+                  className="text-typeograph-2 font-medium text-base sm:text-xl"
+                >
+                  +91 8918065464
                 </Link>
               </div>
             </div>
@@ -143,7 +151,7 @@ export default function ContactDetails() {
                 Email:
               </h2>
               <div className="flex flex-wrap gap-1">
-                {["swarajtravellers@gmail.com"].map((mail, index) => (
+                {["travelsden.official@gmail.com"].map((mail, index) => (
                   <Link
                     href={`mailto:${mail}`}
                     referrerPolicy="no-referrer"
