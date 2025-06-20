@@ -32,13 +32,13 @@ export default function ContactDetails() {
                 Address:
               </h2>
               <Link
-                href="https://maps.app.goo.gl/6RyL4uf6naKPTYyz6"
+                href="https://maps.app.goo.gl/mKoGM3G5MNJe4pX1A"
                 referrerPolicy="no-referrer"
                 target="_blank"
                 className="text-typeograph-2 font-medium text-base sm:text-xl"
               >
-                B R Ambedkar Rd, opp. Shantinagar Yuba Samity, Ward 36, Middle,
-                Shanti Nagar, Dabgram, Siliguri, WB 734001
+                DAK GHAR SARANI POST OFFICE ROAD, NJP, BHAKTINAGAR DIST -
+                JALPAIGURI SILIGURI Pin-734007
               </Link>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function ContactDetails() {
       </div>
       <div className="flex flex-1 h-64 md:h-auto">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d26358.719623245368!2d88.4169369!3d26.7086268!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e441e04cb46fa1%3A0x7763262b109a52e8!2sSwaraj%20Travellers!5e1!3m2!1sen!2sin!4v1732616251886!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d68232.31428117937!2d88.38845581078961!3d26.718175919316817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e4419ddbd461ed%3A0x16d266792a4b85b5!2sRabindra%20sarani%20post%20office!5e1!3m2!1sen!2sin!4v1750399549283!5m2!1sen!2sin"
           width="100%"
           height="100%"
           className="border-none rounded-md"
