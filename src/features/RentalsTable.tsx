@@ -44,13 +44,12 @@ export default function RentalsTable({ tableData }: { tableData: any }) {
 
     if (isConfirmed) {
       try {
-        console.log("Deleting rental with ID:", packId);
         const response = await fetch(`/api/rentals/${packId}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         });
         const result = await response.json();
-        console.log("Deletion result:", result);
+        console.log(result);
         setAllPAck((prevPackages: any) => {
           return prevPackages.filter((pack: any) => pack.rentalId !== packId);
         });

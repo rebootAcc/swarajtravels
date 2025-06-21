@@ -50,7 +50,6 @@ export default function RentalCardList({ rentals }: { rentals: any }) {
             <button
               type="button"
               onClick={() => {
-                console.log(service.rentalType);
                 service.rentalType === "bike"
                   ? setQueryFor("bike_rental")
                   : setQueryFor("car_rental");
